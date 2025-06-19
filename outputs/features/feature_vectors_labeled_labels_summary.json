@@ -1,0 +1,221 @@
+{
+  "classification_rules": {
+    "overshoot": {
+      "keywords": [
+        "overshoot",
+        "oversho"
+      ],
+      "patterns": [
+        ".*overshoot.*",
+        ".*stop.*overshoot.*"
+      ],
+      "description": "Vehicle overshoots intended stopping point"
+    },
+    "nearmiss": {
+      "keywords": [
+        "near miss",
+        "nearmiss",
+        "near-miss"
+      ],
+      "patterns": [
+        ".*near\\s*miss.*"
+      ],
+      "description": "Close call with potential collision"
+    },
+    "hesitation": {
+      "keywords": [
+        "hesitation",
+        "hesitate",
+        "unnecessary halt",
+        "halt"
+      ],
+      "patterns": [
+        ".*hesitat.*",
+        ".*unnecessary.*halt.*"
+      ],
+      "description": "Indecisive or overly cautious behavior"
+    },
+    "oversteering": {
+      "keywords": [
+        "oversteer",
+        "oversteering"
+      ],
+      "patterns": [
+        ".*oversteer.*"
+      ],
+      "description": "Excessive steering input or correction"
+    },
+    "pedestrian": {
+      "keywords": [
+        "pedestrian",
+        "man crossing",
+        "women",
+        "man",
+        "people"
+      ],
+      "patterns": [
+        ".*pedestrian.*",
+        ".*man\\s+(crossing|in\\s+horizon).*",
+        ".*women.*"
+      ],
+      "description": "Interaction with pedestrians"
+    },
+    "bicycle": {
+      "keywords": [
+        "bicycle",
+        "bike"
+      ],
+      "patterns": [
+        ".*bicycle.*",
+        ".*bike.*"
+      ],
+      "description": "Interaction with cyclists"
+    },
+    "traffic_control": {
+      "keywords": [
+        "stop sign",
+        "traffic",
+        "red light"
+      ],
+      "patterns": [
+        ".*stop\\s+sign.*",
+        ".*traffic.*light.*",
+        ".*red\\s+light.*"
+      ],
+      "description": "Traffic control device interaction"
+    },
+    "obstacles": {
+      "keywords": [
+        "traffic cones",
+        "cones",
+        "obstacle",
+        "car on road"
+      ],
+      "patterns": [
+        ".*traffic\\s+cones.*",
+        ".*cones.*",
+        ".*obstacle.*"
+      ],
+      "description": "Static obstacles or road furniture"
+    },
+    "vehicle_interaction": {
+      "keywords": [
+        "leading vehicle",
+        "car",
+        "bus",
+        "vehicle",
+        "overtaking"
+      ],
+      "patterns": [
+        ".*leading\\s+(vehicle|car).*",
+        ".*bus.*",
+        ".*overtaking.*",
+        ".*car.*ahead.*"
+      ],
+      "description": "Interaction with other vehicles"
+    },
+    "lane_change": {
+      "keywords": [
+        "lane change",
+        "swevel",
+        "merge"
+      ],
+      "patterns": [
+        ".*lane\\s+change.*",
+        ".*swevel.*",
+        ".*merge.*"
+      ],
+      "description": "Lane changing or merging maneuvers"
+    },
+    "turn": {
+      "keywords": [
+        "turn",
+        "left turn",
+        "right turn"
+      ],
+      "patterns": [
+        ".*\\b(left|right)\\s+turn.*"
+      ],
+      "description": "Turning maneuvers"
+    },
+    "narrow_pass": {
+      "keywords": [
+        "narrow pass",
+        "narrow"
+      ],
+      "patterns": [
+        ".*narrow\\s+pass.*",
+        ".*narrow.*"
+      ],
+      "description": "Navigating through tight spaces"
+    },
+    "visibility": {
+      "keywords": [
+        "occlusion",
+        "dark to bright",
+        "blind"
+      ],
+      "patterns": [
+        ".*occlusion.*",
+        ".*dark\\s+to\\s+bright.*",
+        ".*blind.*"
+      ],
+      "description": "Visibility or lighting challenges"
+    },
+    "road_conditions": {
+      "keywords": [
+        "road color",
+        "road surface"
+      ],
+      "patterns": [
+        ".*road\\s+(color|surface).*"
+      ],
+      "description": "Road surface or marking changes"
+    },
+    "parking": {
+      "keywords": [
+        "parking",
+        "parked"
+      ],
+      "patterns": [
+        ".*parking.*",
+        ".*parked.*"
+      ],
+      "description": "Parking-related scenarios"
+    },
+    "risky_behavior": {
+      "keywords": [
+        "risky",
+        "nervous",
+        "confusion"
+      ],
+      "patterns": [
+        ".*risky.*",
+        ".*nervous.*",
+        ".*confusion.*"
+      ],
+      "description": "Dangerous or erratic driving behavior"
+    }
+  },
+  "label_distribution": {
+    "other": 3,
+    "overshoot": 8,
+    "nearmiss": 13,
+    "turn": 9,
+    "narrow_pass": 3,
+    "oversteering": 5,
+    "pedestrian": 7,
+    "traffic_control": 10,
+    "bicycle": 3,
+    "parking": 5,
+    "obstacles": 3,
+    "visibility": 2,
+    "hesitation": 4,
+    "vehicle_interaction": 11,
+    "risky_behavior": 4,
+    "road_conditions": 2,
+    "lane_change": 1
+  },
+  "total_segments": 52,
+  "labels_created": 17
+}

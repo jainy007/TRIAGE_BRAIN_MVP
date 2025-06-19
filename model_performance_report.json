@@ -1,0 +1,83 @@
+{
+  "summary": {
+    "advanced_ml": {
+      "accuracy": 0.34615384615384615,
+      "correct_predictions": 18,
+      "total_predictions": 52,
+      "average_confidence": 0.3088333047599976,
+      "average_inference_time_ms": 0.8561290227449857,
+      "error_count": 0,
+      "prediction_distribution": {
+        "other": 4,
+        "pedestrian": 7,
+        "road_conditions": 5,
+        "oversteering": 6,
+        "bicycle": 4,
+        "traffic_control": 10,
+        "hesitation": 4,
+        "overshoot": 7,
+        "vehicle_interaction": 4,
+        "nearmiss": 1
+      }
+    },
+    "simple_ml": {
+      "accuracy": 0.6346153846153846,
+      "correct_predictions": 33,
+      "total_predictions": 52,
+      "average_confidence": 0.43716279049527074,
+      "average_inference_time_ms": 0.6693693307729868,
+      "error_count": 0,
+      "prediction_distribution": {
+        "other": 4,
+        "overshoot": 10,
+        "nearmiss": 11,
+        "oversteering": 2,
+        "pedestrian": 8,
+        "bicycle": 2,
+        "traffic_control": 3,
+        "hesitation": 4,
+        "vehicle_interaction": 6,
+        "road_conditions": 2
+      }
+    },
+    "rule_based": {
+      "accuracy": 0.17307692307692307,
+      "correct_predictions": 9,
+      "total_predictions": 52,
+      "average_confidence": 0.46442307692307694,
+      "average_inference_time_ms": 0.11483522561880258,
+      "error_count": 0,
+      "prediction_distribution": {
+        "nearmiss": 14,
+        "overshoot": 25,
+        "pedestrian": 10,
+        "hesitation": 3
+      }
+    },
+    "deep_learning": {
+      "accuracy": 0.0,
+      "correct_predictions": 0,
+      "total_predictions": 52,
+      "average_confidence": 0.43110595127710927,
+      "average_inference_time_ms": 3.117034068474403,
+      "error_count": 0,
+      "prediction_distribution": {
+        "behavior_10": 2,
+        "behavior_11": 50
+      }
+    }
+  },
+  "optimal_weights": {
+    "advanced_ml": 0.3010165762335505,
+    "simple_ml": 0.30169957993210234,
+    "rule_based": 0.3007463748879042,
+    "deep_learning": 0.09653746894644291
+  },
+  "test_cases_count": 52,
+  "loaded_models": [
+    "advanced_ml",
+    "simple_ml",
+    "rule_based",
+    "deep_learning"
+  ]
+}

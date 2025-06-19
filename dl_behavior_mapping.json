@@ -1,0 +1,38 @@
+{
+  "dl_to_behavior_mapping": {
+    "10": "other"
+  },
+  "consistency_info": {
+    "10": {
+      "maps_to": "other",
+      "consistency": 0.5,
+      "total_predictions": 2,
+      "distribution": {
+        "other": 1,
+        "stop_behavior": 1
+      }
+    },
+    "11": {
+      "maps_to": "nearmiss",
+      "consistency": 0.24,
+      "total_predictions": 50,
+      "distribution": {
+        "other": 4,
+        "overshoot": 8,
+        "nearmiss": 12,
+        "oversteering": 2,
+        "pedestrian": 6,
+        "bicycle": 3,
+        "obstacles": 3,
+        "stop_behavior": 1,
+        "hesitation": 2,
+        "road_conditions": 2,
+        "parking": 2,
+        "lane_change": 2,
+        "turning": 3
+      }
+    }
+  },
+  "total_patterns_tested": 2,
+  "mapping_method": "direct_pattern_testing"
+}

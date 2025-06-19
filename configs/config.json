@@ -1,0 +1,45 @@
+{
+  "pose_data_dir": "/mnt/db/av_dataset/",
+  "models_dir": "assets/models/",
+  "data_dir": "assets/data/",
+  "outputs_dir": "outputs/",
+  "default_model": "practical_triage_brain.json",
+  
+  "feature_extraction": {
+    "motion_features": [
+      "velocity_mean", "velocity_std", "velocity_min", "velocity_max",
+      "acceleration_mean", "acceleration_std", "acceleration_min", "acceleration_max", 
+      "jerk_mean", "jerk_std", "jerk_rms",
+      "max_deceleration", "deceleration_events",
+      "velocity_zero_crossings", "acceleration_reversals",
+      "motion_smoothness", "jerk_per_second", "accel_changes_per_second",
+      "duration_s", "distance_traveled"
+    ],
+    "smoothing": {
+      "window_length": 5,
+      "polyorder": 2
+    },
+    "clipping_thresholds": {
+      "velocity_max": 50.0,
+      "acceleration_max": 20.0,
+      "jerk_max": 50.0
+    }
+  },
+  
+  "classification": {
+    "behavior_types": [
+      "overshoot", "nearmiss", "hesitation", "oversteering",
+      "pedestrian", "bicycle", "traffic_control", "obstacles", 
+      "vehicle_interaction", "lane_change", "narrow_pass",
+      "visibility", "road_conditions", "parking", "risky_behavior"
+    ],
+    "risk_levels": ["LOW", "MEDIUM", "HIGH"],
+    "anomaly_threshold": 2.0
+  },
+  
+  "model_training": {
+    "min_samples_per_class": 2,
+    "anomaly_contamination": 0.1,
+    "confidence_threshold": 0.3
+  }
+}

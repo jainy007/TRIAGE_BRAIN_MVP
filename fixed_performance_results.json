@@ -1,0 +1,39 @@
+{
+  "summary": {
+    "advanced_ml": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 52,
+      "avg_confidence": 0.20034645529098694,
+      "errors": 0
+    },
+    "simple_ml": {
+      "accuracy": 0.019230769230769232,
+      "correct": 1,
+      "total": 52,
+      "avg_confidence": 0.43716279049527074,
+      "errors": 0
+    },
+    "rule_based": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 52,
+      "avg_confidence": 0.46442307692307694,
+      "errors": 0
+    },
+    "deep_learning": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 52,
+      "avg_confidence": 0.43110595127710927,
+      "errors": 0
+    }
+  },
+  "total_tests": 52,
+  "loaded_models": [
+    "advanced_ml",
+    "simple_ml",
+    "rule_based",
+    "deep_learning"
+  ]
+}

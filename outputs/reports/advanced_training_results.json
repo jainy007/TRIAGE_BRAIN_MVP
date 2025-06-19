@@ -1,0 +1,185 @@
+{
+  "dataset_size": 52,
+  "classifier": {
+    "cv_mean": 0.14583333333333334,
+    "cv_std": 0.02946278254943948,
+    "test_accuracy": 0.7333333333333333,
+    "feature_importance": {
+      "distance_traveled": 0.20641171164719066,
+      "velocity_range": 0.19757940043810937,
+      "velocity_max": 0.14132831533196577,
+      "velocity_mean": 0.13244914361680502,
+      "motion_consistency": 0.13215658182471932,
+      "jerk_mean": 0.1260256738826016,
+      "braking_intensity": 0.03786218149408012,
+      "max_deceleration": 0.015617739219054244,
+      "acceleration_range": 0.007248239091560359,
+      "acceleration_max": 0.0033210134539135745
+    },
+    "classification_report": {
+      "hesitation": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 1.0
+      },
+      "nearmiss": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1-score": 0.6666666666666666,
+        "support": 4.0
+      },
+      "other": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1-score": 0.6666666666666666,
+        "support": 1.0
+      },
+      "overshoot": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1-score": 0.6666666666666666,
+        "support": 2.0
+      },
+      "oversteering": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1-score": 0.6666666666666666,
+        "support": 1.0
+      },
+      "pedestrian": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 2.0
+      },
+      "road_conditions": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 1.0
+      },
+      "traffic_control": {
+        "precision": 0.3333333333333333,
+        "recall": 1.0,
+        "f1-score": 0.5,
+        "support": 1.0
+      },
+      "vehicle_interaction": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1-score": 0.6666666666666666,
+        "support": 2.0
+      },
+      "accuracy": 0.7333333333333333,
+      "macro avg": {
+        "precision": 0.8148148148148148,
+        "recall": 0.8333333333333334,
+        "f1-score": 0.7592592592592592,
+        "support": 15.0
+      },
+      "weighted avg": {
+        "precision": 0.8888888888888888,
+        "recall": 0.7333333333333333,
+        "f1-score": 0.7444444444444444,
+        "support": 15.0
+      }
+    },
+    "valid_classes": [
+      "other",
+      "overshoot",
+      "nearmiss",
+      "oversteering",
+      "pedestrian",
+      "bicycle",
+      "traffic_control",
+      "hesitation",
+      "vehicle_interaction",
+      "road_conditions"
+    ],
+    "total_samples": 48,
+    "feature_names": [
+      "duration_s",
+      "num_samples",
+      "sample_rate_hz",
+      "velocity_mean",
+      "velocity_std",
+      "velocity_min",
+      "velocity_max",
+      "velocity_range",
+      "acceleration_mean",
+      "acceleration_std",
+      "acceleration_min",
+      "acceleration_max",
+      "acceleration_range",
+      "jerk_mean",
+      "jerk_std",
+      "jerk_min",
+      "jerk_max",
+      "jerk_rms",
+      "max_deceleration",
+      "deceleration_events",
+      "velocity_zero_crossings",
+      "acceleration_reversals",
+      "motion_smoothness",
+      "jerk_per_second",
+      "accel_changes_per_second",
+      "distance_traveled",
+      "jerk_intensity_per_second",
+      "velocity_variability_ratio",
+      "indecision_intensity",
+      "motion_consistency",
+      "braking_intensity"
+    ],
+    "selected_features": 10
+  },
+  "anomaly_detector": {
+    "total_segments": 52,
+    "anomalous_segments": 6,
+    "anomaly_rate": 0.11538461538461539,
+    "most_anomalous": [
+      {
+        "index": 13,
+        "comment": "unnecessary halt",
+        "anomaly_score": -0.7391774474720753,
+        "clip_name": "0We5t9hiPmE10moaFT87PUUCdPVhIcev__Spring_2020.mp4"
+      },
+      {
+        "index": 0,
+        "comment": "unknown object ahead",
+        "anomaly_score": -0.6751413036400075,
+        "clip_name": "01bb304d7bd835f8bbef7086b688e35e__Summer_2019.mp4"
+      },
+      {
+        "index": 17,
+        "comment": "traffic cones in horizon",
+        "anomaly_score": -0.6132257149627134,
+        "clip_name": "0f0cdd79bc6c35cd9d997ae2fc7e165c__Winter_2020.mp4"
+      },
+      {
+        "index": 20,
+        "comment": "protected left hesitation",
+        "anomaly_score": -0.5845853378336456,
+        "clip_name": "0o93nP9r00gjOTeCuZYMzfThO7NGwvqM__Autumn_2020.mp4"
+      },
+      {
+        "index": 42,
+        "comment": "near miss - men standing by parked car to right",
+        "anomaly_score": -0.5594774386297946,
+        "clip_name": "2GTxggHXDhco2lKaT5Xyig97wuDepNrR__Autumn_2020.mp4"
+      }
+    ]
+  },
+  "top_features": [
+    "distance_traveled",
+    "velocity_range",
+    "velocity_max",
+    "velocity_mean",
+    "motion_consistency",
+    "jerk_mean",
+    "braking_intensity",
+    "max_deceleration",
+    "acceleration_range",
+    "acceleration_max"
+  ]
+}

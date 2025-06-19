@@ -1,0 +1,71 @@
+{
+  "class_mapping": {
+    "stop_sign_overshoot": "overshoot",
+    "overshoot": "overshoot",
+    "stop_overshoot": "overshoot",
+    "vehicle_near_miss": "nearmiss",
+    "pedestrian_near_miss": "nearmiss",
+    "nearmiss": "nearmiss",
+    "near_miss": "nearmiss",
+    "pedestrian": "pedestrian",
+    "pedestrian_crossing": "pedestrian",
+    "man_crossing": "pedestrian",
+    "bicycle": "bicycle",
+    "bicycle_interaction": "bicycle",
+    "oversteering": "oversteering",
+    "oversteer": "oversteering",
+    "obstacles": "obstacles",
+    "traffic_cone_avoidance": "obstacles",
+    "traffic_cones": "obstacles",
+    "hesitation": "hesitation",
+    "intersection_hesitation": "hesitation",
+    "following_hesitation": "hesitation",
+    "stop_behavior": "stop_behavior",
+    "unnecessary_halt": "stop_behavior",
+    "vehicle_interaction": "vehicle_interaction",
+    "leading_vehicle": "vehicle_interaction",
+    "lane_change": "lane_change",
+    "lane_deviation": "lane_change",
+    "turning": "turning",
+    "parking": "parking",
+    "parked_vehicle_avoidance": "parking",
+    "road_conditions": "road_conditions",
+    "visibility_issues": "road_conditions",
+    "other": "other",
+    "unknown": "other",
+    "unknown_behavior": "other"
+  },
+  "risk_weights": {
+    "behavior_risk": {
+      "nearmiss": 3,
+      "overshoot": 3,
+      "oversteering": 2,
+      "pedestrian": 2,
+      "bicycle": 2,
+      "obstacles": 1,
+      "hesitation": 1,
+      "stop_behavior": 1,
+      "other": 0
+    },
+    "motion_risk": {
+      "high_jerk_threshold": 50,
+      "critical_jerk_threshold": 60,
+      "high_decel_threshold": 18,
+      "critical_decel_threshold": 25
+    },
+    "confidence_penalty": {
+      "very_low": 0.2,
+      "low": 0.4,
+      "medium": 0.6,
+      "high": 1.0
+    }
+  },
+  "model_weights": {
+    "deep_learning": 0.4,
+    "advanced_ml": 0.3,
+    "simple_ml": 0.2,
+    "rule_based": 0.1
+  },
+  "description": "Quick fixes for ensemble performance issues",
+  "version": "1.0"
+}

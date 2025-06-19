@@ -1,0 +1,71 @@
+2025-06-18 19:53:46,496 - INFO - Loading clip for V2 analysis: 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh__Autumn_2020
+2025-06-18 19:53:46,551 - INFO - Loaded MP4: 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh.mp4 (1155 frames, 10.0 FPS)
+2025-06-18 19:53:46,553 - INFO - Generated enhanced motion data for V2: 1155 samples
+2025-06-18 19:53:46,555 - INFO - Applied proper filtering: vel_range=[-5.28, 9.90]
+2025-06-18 19:53:46,611 - INFO - Processed motion data with proper filtering: 1154 samples
+2025-06-18 19:53:46,612 - INFO - Running fresh V2 ensemble analysis
+2025-06-18 19:53:46,612 - ERROR - V2 analysis failed: 'list' object has no attribute 'keys'
+2025-06-18 19:54:20,142 - INFO - V2 application ended
+2025-06-18 19:55:04,925 - INFO - V2 Ensemble WORKING models loaded from: /home/jainy007/PEM/triage_brain/triage_brain_model
+2025-06-18 19:59:12,769 - INFO - V2 Ensemble WORKING models loaded from: /home/jainy007/PEM/triage_brain/triage_brain_model
+2025-06-18 20:55:51,704 - INFO - Enhanced video player initialized
+2025-06-18 20:55:51,980 - INFO - Motion analyzer initialized with proper filtering
+2025-06-18 20:55:51,980 - INFO - ============================================================
+2025-06-18 20:55:51,980 - INFO - TRIAGE BRAIN SESSION STARTED
+2025-06-18 20:55:51,980 - INFO - Timestamp: 2025-06-18 20:55:51.980842
+2025-06-18 20:55:51,980 - INFO - ============================================================
+2025-06-18 20:55:51,980 - INFO - Starting Triage Brain GUI with V2 Ensemble
+2025-06-18 20:55:52,085 - INFO - Loaded 50 MP4 clips for V2 analysis
+2025-06-18 20:55:55,986 - INFO - Loading clip for V2 analysis: 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh__Autumn_2020
+2025-06-18 20:55:56,040 - INFO - Loaded MP4: 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh.mp4 (1155 frames, 10.0 FPS)
+2025-06-18 20:55:56,041 - INFO - Generated enhanced motion data for V2: 1155 samples
+2025-06-18 20:55:56,043 - INFO - Applied proper filtering: vel_range=[-5.48, 7.17]
+2025-06-18 20:55:56,104 - INFO - Processed motion data with proper filtering: 1154 samples
+2025-06-18 20:55:56,104 - INFO - Running fresh V2 ensemble analysis
+2025-06-18 20:55:56,104 - ERROR - V2 analysis failed: 'ClusterAnalyzer' object has no attribute 'analyze_full_scene'
+2025-06-18 21:04:02,785 - INFO - V2 application ended
+2025-06-18 21:04:09,328 - INFO - Enhanced video player initialized
+2025-06-18 21:04:09,611 - INFO - Motion analyzer initialized with proper filtering
+2025-06-18 21:04:09,612 - INFO - ============================================================
+2025-06-18 21:04:09,612 - INFO - TRIAGE BRAIN SESSION STARTED
+2025-06-18 21:04:09,612 - INFO - Timestamp: 2025-06-18 21:04:09.612063
+2025-06-18 21:04:09,612 - INFO - ============================================================
+2025-06-18 21:04:09,612 - INFO - Starting Triage Brain GUI with V2 Ensemble
+2025-06-18 21:04:09,716 - INFO - Loaded 50 MP4 clips for V2 analysis
+2025-06-18 21:04:14,015 - INFO - Loading clip for V2 analysis: 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh__Autumn_2020
+2025-06-18 21:04:14,070 - INFO - Loaded MP4: 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh.mp4 (1155 frames, 10.0 FPS)
+2025-06-18 21:04:14,072 - INFO - Generated enhanced motion data for V2: 1155 samples
+2025-06-18 21:04:14,073 - INFO - Applied proper filtering: vel_range=[-6.20, 5.95]
+2025-06-18 21:04:14,130 - INFO - Processed motion data with proper filtering: 1154 samples
+2025-06-18 21:04:14,130 - INFO - Running fresh V2 ensemble analysis
+2025-06-18 21:04:14,778 - INFO - Cached analysis for scene 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh_v2
+2025-06-18 21:04:14,805 - INFO - Adding overlays: max_time=115.4s, data_points=1154
+2025-06-18 21:04:14,805 - INFO - Cluster 1: nearmiss video_frames 363-366 (36.3-36.6s) -> data_time 36.3-36.6s
+2025-06-18 21:04:14,807 - INFO - Cluster 2: nearmiss video_frames 369-457 (36.9-45.7s) -> data_time 36.9-45.7s
+2025-06-18 21:04:14,835 - INFO - Added 2 STABLE cluster overlays with CORRECT timing
+2025-06-18 21:04:14,835 - INFO - V2 analysis complete: 2 clusters found
+2025-06-18 21:05:53,205 - INFO - Loading clip for V2 analysis: 1ZHV39J5CEsYNiamsaR6u7PIIIOxdInn__Autumn_2020
+2025-06-18 21:05:53,241 - INFO - Loaded MP4: 1ZHV39J5CEsYNiamsaR6u7PIIIOxdInn.mp4 (1165 frames, 10.0 FPS)
+2025-06-18 21:05:53,243 - INFO - Generated enhanced motion data for V2: 1165 samples
+2025-06-18 21:05:53,245 - INFO - Applied proper filtering: vel_range=[-5.80, 6.21]
+2025-06-18 21:05:53,289 - INFO - Processed motion data with proper filtering: 1164 samples
+2025-06-18 21:05:53,289 - INFO - Running fresh V2 ensemble analysis
+2025-06-18 21:05:54,152 - INFO - Cached analysis for scene 1ZHV39J5CEsYNiamsaR6u7PIIIOxdInn_v2
+2025-06-18 21:05:54,176 - INFO - Adding overlays: max_time=116.4s, data_points=1164
+2025-06-18 21:05:54,176 - INFO - Cluster 1: nearmiss video_frames 1015-1061 (101.5-106.1s) -> data_time 101.5-106.1s
+2025-06-18 21:05:54,177 - INFO - Cluster 2: nearmiss video_frames 1115-1163 (111.5-116.3s) -> data_time 111.5-116.3s
+2025-06-18 21:05:54,202 - INFO - Added 2 STABLE cluster overlays with CORRECT timing
+2025-06-18 21:05:54,202 - INFO - V2 analysis complete: 2 clusters found
+2025-06-18 21:06:26,441 - INFO - Loading clip for V2 analysis: 1mQ4VuN3CZ27Xh7iXUILqKuNw1tciHrv__Summer_2020
+2025-06-18 21:06:26,467 - INFO - Loaded MP4: 1mQ4VuN3CZ27Xh7iXUILqKuNw1tciHrv.mp4 (1183 frames, 10.0 FPS)
+2025-06-18 21:06:26,468 - INFO - Generated enhanced motion data for V2: 1183 samples
+2025-06-18 21:06:26,470 - INFO - Applied proper filtering: vel_range=[-4.90, 7.02]
+2025-06-18 21:06:26,512 - INFO - Processed motion data with proper filtering: 1182 samples
+2025-06-18 21:06:26,512 - INFO - Running fresh V2 ensemble analysis
+2025-06-18 21:06:27,832 - INFO - Cached analysis for scene 1mQ4VuN3CZ27Xh7iXUILqKuNw1tciHrv_v2
+2025-06-18 21:06:27,858 - INFO - Adding overlays: max_time=118.2s, data_points=1182
+2025-06-18 21:06:27,858 - INFO - Cluster 1: nearmiss video_frames 0-45 (0.0-4.5s) -> data_time 0.0-4.5s
+2025-06-18 21:06:27,859 - INFO - Cluster 2: nearmiss video_frames 1088-1156 (108.8-115.6s) -> data_time 108.8-115.6s
+2025-06-18 21:06:27,885 - INFO - Added 2 STABLE cluster overlays with CORRECT timing
+2025-06-18 21:06:27,885 - INFO - V2 analysis complete: 2 clusters found
+2025-06-18 23:18:03,876 - INFO - V2 application ended

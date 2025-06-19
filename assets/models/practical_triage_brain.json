@@ -1,0 +1,638 @@
+{
+  "behavioral_rules": {
+    "overshoot": {
+      "sample_count": 8,
+      "conditions": {
+        "duration": {
+          "min": 3.7818742096424103,
+          "max": 6.298744261264801,
+          "mean": 5.478261135518551
+        },
+        "jerk_intensity": {
+          "threshold": 48.288955740651204,
+          "std": 1.7356671063153348
+        },
+        "braking_intensity": {
+          "threshold": 20.0,
+          "strong_braking": 20.0
+        },
+        "smoothness": {
+          "threshold": 0.020311407450191846,
+          "std": 0.0007431784929165508
+        },
+        "indecision_rate": {
+          "threshold": 69.63917847976118,
+          "high_indecision": 71.03292262351867
+        }
+      },
+      "example_comments": [
+        "left turn overshoot nearmiss",
+        "stop sine overshoot",
+        "stop sign overshoot"
+      ]
+    },
+    "nearmiss": {
+      "sample_count": 12,
+      "conditions": {
+        "duration": {
+          "min": 5.997066721320152,
+          "max": 9.423036321997643,
+          "mean": 9.267029866576195
+        },
+        "jerk_intensity": {
+          "threshold": 45.921053524599024,
+          "std": 6.887746921791957
+        },
+        "braking_intensity": {
+          "threshold": 18.555322776932673,
+          "strong_braking": 20.0
+        },
+        "smoothness": {
+          "threshold": 0.021886708692514637,
+          "std": 0.00427591135502506
+        },
+        "indecision_rate": {
+          "threshold": 73.4039075711624,
+          "high_indecision": 74.7586528852631
+        }
+      },
+      "example_comments": [
+        "narrow near miss",
+        "in parking lane - near miss",
+        "oversteering near miss"
+      ]
+    },
+    "oversteering": {
+      "sample_count": 2,
+      "conditions": {
+        "duration": {
+          "min": 4.398166075348854,
+          "max": 5.599070712924004,
+          "mean": 4.998618394136429
+        },
+        "jerk_intensity": {
+          "threshold": 49.33859751767018,
+          "std": 0.6239540076249351
+        },
+        "braking_intensity": {
+          "threshold": 20.0,
+          "strong_braking": 20.0
+        },
+        "smoothness": {
+          "threshold": 0.019866998187808408,
+          "std": 0.0002462542412789531
+        },
+        "indecision_rate": {
+          "threshold": 73.27249247730126,
+          "high_indecision": 74.42213775089961
+        }
+      },
+      "example_comments": [
+        "oversteer unnessarily",
+        "turn oversteering"
+      ]
+    },
+    "pedestrian": {
+      "sample_count": 6,
+      "conditions": {
+        "duration": {
+          "min": 6.247478350996971,
+          "max": 16.49559397995472,
+          "mean": 11.113669524590174
+        },
+        "jerk_intensity": {
+          "threshold": 47.22324436746368,
+          "std": 3.724956677041325
+        },
+        "braking_intensity": {
+          "threshold": 20.0,
+          "strong_braking": 20.0
+        },
+        "smoothness": {
+          "threshold": 0.020852423845483192,
+          "std": 0.0017969755333370628
+        },
+        "indecision_rate": {
+          "threshold": 68.31167177689603,
+          "high_indecision": 71.87653986085284
+        }
+      },
+      "example_comments": [
+        "man crossing",
+        "pedestrian crossing",
+        "man crossing with dog ahead"
+      ]
+    },
+    "bicycle": {
+      "sample_count": 2,
+      "conditions": {
+        "duration": {
+          "min": 6.672901973128319,
+          "max": 8.024101331830025,
+          "mean": 7.348501652479172
+        },
+        "jerk_intensity": {
+          "threshold": 47.31601811254196,
+          "std": 3.1018388968977724
+        },
+        "braking_intensity": {
+          "threshold": 17.841080163220216,
+          "strong_braking": 16.761620244830326
+        },
+        "smoothness": {
+          "threshold": 0.020739809464764808,
+          "std": 0.0013314745342260907
+        },
+        "indecision_rate": {
+          "threshold": 73.4408282016091,
+          "high_indecision": 74.98761971392146
+        }
+      },
+      "example_comments": [
+        "bicycle",
+        "bicycle crossed"
+      ]
+    },
+    "traffic_control": {
+      "sample_count": 3,
+      "conditions": {
+        "duration": {
+          "min": 7.363733857870102,
+          "max": 9.493737995624542,
+          "mean": 8.37414824962616
+        },
+        "jerk_intensity": {
+          "threshold": 46.5819191367088,
+          "std": 5.243682376945776
+        },
+        "braking_intensity": {
+          "threshold": 20.0,
+          "strong_braking": 20.0
+        },
+        "smoothness": {
+          "threshold": 0.02119955561888694,
+          "std": 0.002493264975440462
+        },
+        "indecision_rate": {
+          "threshold": 86.67220998624417,
+          "high_indecision": 93.83699889070681
+        }
+      },
+      "example_comments": [
+        "traffic cones avoided",
+        "traffic cones in horizon",
+        "overwhelming traffic cones all around"
+      ]
+    },
+    "hesitation": {
+      "sample_count": 4,
+      "conditions": {
+        "duration": {
+          "min": 6.299804270267487,
+          "max": 13.846780583262444,
+          "mean": 10.6492268294096
+        },
+        "jerk_intensity": {
+          "threshold": 42.52951092779021,
+          "std": 9.926162832776287
+        },
+        "braking_intensity": {
+          "threshold": 11.465197863258194,
+          "strong_braking": 3.8904532749085923
+        },
+        "smoothness": {
+          "threshold": 0.024166747023842985,
+          "std": 0.0070009820732638475
+        },
+        "indecision_rate": {
+          "threshold": 78.41147436664609,
+          "high_indecision": 81.0316254853565
+        }
+      },
+      "example_comments": [
+        "unnecessary halt",
+        "right turn hesitation - letting bicycle pass from right",
+        "protected left hesitation"
+      ]
+    },
+    "vehicle_interaction": {
+      "sample_count": 6,
+      "conditions": {
+        "duration": {
+          "min": 9.326855704188347,
+          "max": 13.447202697396278,
+          "mean": 11.072405070066452
+        },
+        "jerk_intensity": {
+          "threshold": 49.305038989162306,
+          "std": 0.940403963851081
+        },
+        "braking_intensity": {
+          "threshold": 19.36417108978596,
+          "strong_braking": 20.0
+        },
+        "smoothness": {
+          "threshold": 0.019884678732431094,
+          "std": 0.00038224184304060837
+        },
+        "indecision_rate": {
+          "threshold": 71.12000267798726,
+          "high_indecision": 72.22267167115982
+        }
+      },
+      "example_comments": [
+        "stopped car on right lane",
+        "car parallel parking ahead",
+        "bus coming on lane from right"
+      ]
+    },
+    "road_conditions": {
+      "sample_count": 2,
+      "conditions": {
+        "duration": {
+          "min": 10.923674508929253,
+          "max": 12.371209517121315,
+          "mean": 11.647442013025284
+        },
+        "jerk_intensity": {
+          "threshold": 48.75994470302949,
+          "std": 0.05060597781632706
+        },
+        "braking_intensity": {
+          "threshold": 20.0,
+          "strong_braking": 20.0
+        },
+        "smoothness": {
+          "threshold": 0.020096495748039213,
+          "std": 2.0438182238356932e-05
+        },
+        "indecision_rate": {
+          "threshold": 64.83513191001266,
+          "high_indecision": 68.23282544267822
+        }
+      },
+      "example_comments": [
+        "change in road color",
+        "road color change"
+      ]
+    }
+  },
+  "anomaly_thresholds": {
+    "jerk_rms": {
+      "mean": 46.647723650935646,
+      "std": 5.836250726858428,
+      "upper_threshold": 58.3202251046525,
+      "lower_threshold": 34.97522219721879
+    },
+    "velocity_std": {
+      "mean": 2.4721594992393845,
+      "std": 7.079769634951395,
+      "upper_threshold": 16.631698769142176,
+      "lower_threshold": -11.687379770663405
+    },
+    "acceleration_reversals": {
+      "mean": 687.8653846153846,
+      "std": 423.2113470459844,
+      "upper_threshold": 1534.2880787073534,
+      "lower_threshold": -158.55730947658412
+    },
+    "duration_s": {
+      "mean": 9.521095738961147,
+      "std": 5.908766134651656,
+      "upper_threshold": 21.338628008264457,
+      "lower_threshold": -2.2964365303421648
+    },
+    "motion_smoothness": {
+      "mean": 0.02144885740070018,
+      "std": 0.003892196946007501,
+      "upper_threshold": 0.02923325129271518,
+      "lower_threshold": 0.013664463508685177
+    }
+  },
+  "training_stats": {
+    "dataset_size": 52,
+    "behavioral_rules": {
+      "overshoot": {
+        "sample_count": 8,
+        "conditions": {
+          "duration": {
+            "min": 3.7818742096424103,
+            "max": 6.298744261264801,
+            "mean": 5.478261135518551
+          },
+          "jerk_intensity": {
+            "threshold": 48.288955740651204,
+            "std": 1.7356671063153348
+          },
+          "braking_intensity": {
+            "threshold": 20.0,
+            "strong_braking": 20.0
+          },
+          "smoothness": {
+            "threshold": 0.020311407450191846,
+            "std": 0.0007431784929165508
+          },
+          "indecision_rate": {
+            "threshold": 69.63917847976118,
+            "high_indecision": 71.03292262351867
+          }
+        },
+        "example_comments": [
+          "left turn overshoot nearmiss",
+          "stop sine overshoot",
+          "stop sign overshoot"
+        ]
+      },
+      "nearmiss": {
+        "sample_count": 12,
+        "conditions": {
+          "duration": {
+            "min": 5.997066721320152,
+            "max": 9.423036321997643,
+            "mean": 9.267029866576195
+          },
+          "jerk_intensity": {
+            "threshold": 45.921053524599024,
+            "std": 6.887746921791957
+          },
+          "braking_intensity": {
+            "threshold": 18.555322776932673,
+            "strong_braking": 20.0
+          },
+          "smoothness": {
+            "threshold": 0.021886708692514637,
+            "std": 0.00427591135502506
+          },
+          "indecision_rate": {
+            "threshold": 73.4039075711624,
+            "high_indecision": 74.7586528852631
+          }
+        },
+        "example_comments": [
+          "narrow near miss",
+          "in parking lane - near miss",
+          "oversteering near miss"
+        ]
+      },
+      "oversteering": {
+        "sample_count": 2,
+        "conditions": {
+          "duration": {
+            "min": 4.398166075348854,
+            "max": 5.599070712924004,
+            "mean": 4.998618394136429
+          },
+          "jerk_intensity": {
+            "threshold": 49.33859751767018,
+            "std": 0.6239540076249351
+          },
+          "braking_intensity": {
+            "threshold": 20.0,
+            "strong_braking": 20.0
+          },
+          "smoothness": {
+            "threshold": 0.019866998187808408,
+            "std": 0.0002462542412789531
+          },
+          "indecision_rate": {
+            "threshold": 73.27249247730126,
+            "high_indecision": 74.42213775089961
+          }
+        },
+        "example_comments": [
+          "oversteer unnessarily",
+          "turn oversteering"
+        ]
+      },
+      "pedestrian": {
+        "sample_count": 6,
+        "conditions": {
+          "duration": {
+            "min": 6.247478350996971,
+            "max": 16.49559397995472,
+            "mean": 11.113669524590174
+          },
+          "jerk_intensity": {
+            "threshold": 47.22324436746368,
+            "std": 3.724956677041325
+          },
+          "braking_intensity": {
+            "threshold": 20.0,
+            "strong_braking": 20.0
+          },
+          "smoothness": {
+            "threshold": 0.020852423845483192,
+            "std": 0.0017969755333370628
+          },
+          "indecision_rate": {
+            "threshold": 68.31167177689603,
+            "high_indecision": 71.87653986085284
+          }
+        },
+        "example_comments": [
+          "man crossing",
+          "pedestrian crossing",
+          "man crossing with dog ahead"
+        ]
+      },
+      "bicycle": {
+        "sample_count": 2,
+        "conditions": {
+          "duration": {
+            "min": 6.672901973128319,
+            "max": 8.024101331830025,
+            "mean": 7.348501652479172
+          },
+          "jerk_intensity": {
+            "threshold": 47.31601811254196,
+            "std": 3.1018388968977724
+          },
+          "braking_intensity": {
+            "threshold": 17.841080163220216,
+            "strong_braking": 16.761620244830326
+          },
+          "smoothness": {
+            "threshold": 0.020739809464764808,
+            "std": 0.0013314745342260907
+          },
+          "indecision_rate": {
+            "threshold": 73.4408282016091,
+            "high_indecision": 74.98761971392146
+          }
+        },
+        "example_comments": [
+          "bicycle",
+          "bicycle crossed"
+        ]
+      },
+      "traffic_control": {
+        "sample_count": 3,
+        "conditions": {
+          "duration": {
+            "min": 7.363733857870102,
+            "max": 9.493737995624542,
+            "mean": 8.37414824962616
+          },
+          "jerk_intensity": {
+            "threshold": 46.5819191367088,
+            "std": 5.243682376945776
+          },
+          "braking_intensity": {
+            "threshold": 20.0,
+            "strong_braking": 20.0
+          },
+          "smoothness": {
+            "threshold": 0.02119955561888694,
+            "std": 0.002493264975440462
+          },
+          "indecision_rate": {
+            "threshold": 86.67220998624417,
+            "high_indecision": 93.83699889070681
+          }
+        },
+        "example_comments": [
+          "traffic cones avoided",
+          "traffic cones in horizon",
+          "overwhelming traffic cones all around"
+        ]
+      },
+      "hesitation": {
+        "sample_count": 4,
+        "conditions": {
+          "duration": {
+            "min": 6.299804270267487,
+            "max": 13.846780583262444,
+            "mean": 10.6492268294096
+          },
+          "jerk_intensity": {
+            "threshold": 42.52951092779021,
+            "std": 9.926162832776287
+          },
+          "braking_intensity": {
+            "threshold": 11.465197863258194,
+            "strong_braking": 3.8904532749085923
+          },
+          "smoothness": {
+            "threshold": 0.024166747023842985,
+            "std": 0.0070009820732638475
+          },
+          "indecision_rate": {
+            "threshold": 78.41147436664609,
+            "high_indecision": 81.0316254853565
+          }
+        },
+        "example_comments": [
+          "unnecessary halt",
+          "right turn hesitation - letting bicycle pass from right",
+          "protected left hesitation"
+        ]
+      },
+      "vehicle_interaction": {
+        "sample_count": 6,
+        "conditions": {
+          "duration": {
+            "min": 9.326855704188347,
+            "max": 13.447202697396278,
+            "mean": 11.072405070066452
+          },
+          "jerk_intensity": {
+            "threshold": 49.305038989162306,
+            "std": 0.940403963851081
+          },
+          "braking_intensity": {
+            "threshold": 19.36417108978596,
+            "strong_braking": 20.0
+          },
+          "smoothness": {
+            "threshold": 0.019884678732431094,
+            "std": 0.00038224184304060837
+          },
+          "indecision_rate": {
+            "threshold": 71.12000267798726,
+            "high_indecision": 72.22267167115982
+          }
+        },
+        "example_comments": [
+          "stopped car on right lane",
+          "car parallel parking ahead",
+          "bus coming on lane from right"
+        ]
+      },
+      "road_conditions": {
+        "sample_count": 2,
+        "conditions": {
+          "duration": {
+            "min": 10.923674508929253,
+            "max": 12.371209517121315,
+            "mean": 11.647442013025284
+          },
+          "jerk_intensity": {
+            "threshold": 48.75994470302949,
+            "std": 0.05060597781632706
+          },
+          "braking_intensity": {
+            "threshold": 20.0,
+            "strong_braking": 20.0
+          },
+          "smoothness": {
+            "threshold": 0.020096495748039213,
+            "std": 2.0438182238356932e-05
+          },
+          "indecision_rate": {
+            "threshold": 64.83513191001266,
+            "high_indecision": 68.23282544267822
+          }
+        },
+        "example_comments": [
+          "change in road color",
+          "road color change"
+        ]
+      }
+    },
+    "anomaly_detection": {
+      "thresholds": {
+        "jerk_rms": {
+          "mean": 46.647723650935646,
+          "std": 5.836250726858428,
+          "upper_threshold": 58.3202251046525,
+          "lower_threshold": 34.97522219721879
+        },
+        "velocity_std": {
+          "mean": 2.4721594992393845,
+          "std": 7.079769634951395,
+          "upper_threshold": 16.631698769142176,
+          "lower_threshold": -11.687379770663405
+        },
+        "acceleration_reversals": {
+          "mean": 687.8653846153846,
+          "std": 423.2113470459844,
+          "upper_threshold": 1534.2880787073534,
+          "lower_threshold": -158.55730947658412
+        },
+        "duration_s": {
+          "mean": 9.521095738961147,
+          "std": 5.908766134651656,
+          "upper_threshold": 21.338628008264457,
+          "lower_threshold": -2.2964365303421648
+        },
+        "motion_smoothness": {
+          "mean": 0.02144885740070018,
+          "std": 0.003892196946007501,
+          "upper_threshold": 0.02923325129271518,
+          "lower_threshold": 0.013664463508685177
+        }
+      },
+      "anomalies_in_training": [
+        {
+          "index": 0,
+          "comment": "unknown object ahead",
+          "anomaly_score": 2.1692751182235,
+          "clip_name": "01bb304d7bd835f8bbef7086b688e35e__Summer_2019.mp4"
+        }
+      ],
+      "total_anomalies": 1
+    },
+    "training_accuracy": 0.0,
+    "behaviors_covered": 9
+  }
+}

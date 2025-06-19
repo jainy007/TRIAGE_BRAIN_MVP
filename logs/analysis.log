@@ -1,0 +1,13 @@
+2025-06-18 19:53:46,612 - ANALYSIS - Starting V2 ANNOTATION-BIASED analysis of 1154 frames
+2025-06-18 19:55:05,065 - ANALYSIS - Starting V2 ANNOTATION-BIASED analysis of 100 frames
+2025-06-18 19:55:05,128 - ANALYSIS - Working batch processed 50 frames successfully
+2025-06-18 19:55:05,168 - ANALYSIS - Working batch processed 50 frames successfully
+2025-06-18 19:55:05,168 - ANALYSIS - V2 FULL SCAN analysis complete: 100 frames in 0.1s
+2025-06-18 19:55:05,168 - ANALYSIS - Selected top 1 ANNOTATION-AWARE clusters:
+2025-06-18 19:55:05,168 - ANALYSIS -   1. 🔍 other (frames 0-99, score: 0.285, bonus: 1.0x)
+2025-06-18 19:59:12,908 - ANALYSIS - Starting V2 ANNOTATION-BIASED analysis of 100 frames
+2025-06-18 19:59:12,968 - ANALYSIS - Working batch processed 50 frames successfully
+2025-06-18 19:59:13,008 - ANALYSIS - Working batch processed 50 frames successfully
+2025-06-18 19:59:13,008 - ANALYSIS - V2 FULL SCAN analysis complete: 100 frames in 0.1s
+2025-06-18 19:59:13,008 - ANALYSIS - Selected top 1 ANNOTATION-AWARE clusters:
+2025-06-18 19:59:13,008 - ANALYSIS -   1. 🔍 other (frames 0-99, score: 0.285, bonus: 1.0x)

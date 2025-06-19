@@ -1,0 +1,9 @@
+{
+  "dl_class_mapping": {
+    "10": "other",
+    "11": "other"
+  },
+  "mapping_method": "tested_on_annotated_data",
+  "total_dl_classes": 2,
+  "mapping_confidence": "high"
+}

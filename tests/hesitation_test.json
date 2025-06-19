@@ -1,0 +1,9 @@
+{
+  "jerk_rms": 35.0,
+  "velocity_mean": -0.5,
+  "max_deceleration": -8.0,
+  "duration_s": 12.0,
+  "motion_smoothness": 0.025,
+  "acceleration_reversals": 850,
+  "velocity_std": 0.8
+}

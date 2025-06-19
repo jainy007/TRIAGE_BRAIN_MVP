@@ -1,0 +1,329 @@
+{
+  "analysis_summary": {
+    "main_issue": "Class mapping mismatch between models and ground truth",
+    "secondary_issues": [
+      "Aggressive risk assessment",
+      "Low model confidence"
+    ],
+    "recommended_priority": "Fix class mappings first"
+  },
+  "sample_analysis": {
+    "sample_cases": [
+      {
+        "comment": "unknown object ahead",
+        "expected": "other",
+        "features": {
+          "start_frame": 157,
+          "end_frame": 206,
+          "comment": "unknown object ahead",
+          "duration_s": 0.25,
+          "num_samples": 41,
+          "sample_rate_hz": 164.0,
+          "velocity_mean": -5.415677582279926,
+          "velocity_std": 36.861203281099364,
+          "velocity_min": -50.0,
+          "velocity_max": 50.0,
+          "velocity_range": 100.0,
+          "acceleration_mean": 0.21971258762854573,
+          "acceleration_std": 12.704681717631267,
+          "acceleration_min": -20.0,
+          "acceleration_max": 20.0,
+          "acceleration_range": 40.0,
+          "jerk_mean": -6.062204813484236,
+          "jerk_std": 37.10006270619305,
+          "jerk_min": -50.0,
+          "jerk_max": 50.0,
+          "jerk_rms": 37.14288479522452,
+          "max_deceleration": -20.0,
+          "deceleration_events": 13,
+          "velocity_zero_crossings": 14,
+          "acceleration_reversals": 25,
+          "motion_smoothness": 0.026217209457770216,
+          "jerk_per_second": 148.57153918089807,
+          "accel_changes_per_second": 100.0,
+          "distance_traveled": -1.3539193955699815,
+          "clip_name": "01bb304d7bd835f8bbef7086b688e35e__Summer_2019.mp4",
+          "scene_id": "01bb304d7bd835f8bbef7086b688e35e__Summer_2019",
+          "total_frames": 319,
+          "fps": 10.0
+        }
+      },
+      {
+        "comment": "left turn overshoot nearmiss",
+        "expected": "other",
+        "features": {
+          "start_frame": 251,
+          "end_frame": 289,
+          "comment": "left turn overshoot nearmiss",
+          "duration_s": 3.7924989461898804,
+          "num_samples": 570,
+          "sample_rate_hz": 150.29667986398476,
+          "velocity_mean": 3.0721974504292233,
+          "velocity_std": 1.4195497135054735,
+          "velocity_min": 0.5075121748700316,
+          "velocity_max": 6.1359034803206125,
+          "velocity_range": 5.628391305450581,
+          "acceleration_mean": -1.2005719369801184,
+          "acceleration_std": 12.080730469559883,
+          "acceleration_min": -20.0,
+          "acceleration_max": 20.0,
+          "acceleration_range": 40.0,
+          "jerk_mean": -2.1593791905211797,
+          "jerk_std": 49.55811886791569,
+          "jerk_min": -50.0,
+          "jerk_max": 50.0,
+          "jerk_rms": 49.56169165543818,
+          "max_deceleration": -20.0,
+          "deceleration_events": 331,
+          "velocity_zero_crossings": 0,
+          "acceleration_reversals": 270,
+          "motion_smoothness": 0.019777819278964822,
+          "jerk_per_second": 13.06834684957003,
+          "accel_changes_per_second": 71.19316414609804,
+          "distance_traveled": 11.651305593240068,
+          "clip_name": "0262e2af16044492b13ca051d6ab4d80__Spring_2020.mp4",
+          "scene_id": "0262e2af16044492b13ca051d6ab4d80__Spring_2020",
+          "total_frames": 580,
+          "fps": 10.0
+        }
+      },
+      {
+        "comment": "stop sine overshoot",
+        "expected": "other",
+        "features": {
+          "start_frame": 200,
+          "end_frame": 235,
+          "comment": "stop sine overshoot",
+          "duration_s": 3.494977056980133,
+          "num_samples": 524,
+          "sample_rate_hz": 149.92945345763357,
+          "velocity_mean": -3.7029222809458457,
+          "velocity_std": 0.2594756733180688,
+          "velocity_min": -4.404495237519322,
+          "velocity_max": -3.140080271321844,
+          "velocity_range": 1.2644149661974784,
+          "acceleration_mean": 0.0010037211362969578,
+          "acceleration_std": 13.425638916215137,
+          "acceleration_min": -20.0,
+          "acceleration_max": 20.0,
+          "acceleration_range": 40.0,
+          "jerk_mean": 0.2553766889137369,
+          "jerk_std": 49.74548752473632,
+          "jerk_min": -50.0,
+          "jerk_max": 50.0,
+          "jerk_rms": 49.69865391963977,
+          "max_deceleration": -20.0,
+          "deceleration_events": 254,
+          "velocity_zero_crossings": 0,
+          "acceleration_reversals": 243,
+          "motion_smoothness": 0.019724389558449747,
+          "jerk_per_second": 14.220022938457383,
+          "accel_changes_per_second": 69.52835341642168,
+          "distance_traveled": -12.941628415686273,
+          "clip_name": "04akO6mLeIFQRjbq9XwT71QNx0IJ0sTy__Spring_2020.mp4",
+          "scene_id": "04akO6mLeIFQRjbq9XwT71QNx0IJ0sTy__Spring_2020",
+          "total_frames": 1142,
+          "fps": 10.0
+        }
+      },
+      {
+        "comment": "narrow near miss",
+        "expected": "nearmiss",
+        "features": {
+          "start_frame": 451,
+          "end_frame": 527,
+          "comment": "narrow near miss",
+          "duration_s": 7.594977021217346,
+          "num_samples": 1139,
+          "sample_rate_hz": 149.96753733659585,
+          "velocity_mean": -1.714682294414568,
+          "velocity_std": 1.3284478934526902,
+          "velocity_min": -5.4863745872632395,
+          "velocity_max": 0.06584543220725594,
+          "velocity_range": 5.552220019470496,
+          "acceleration_mean": -0.5328813350454129,
+          "acceleration_std": 10.201833244580977,
+          "acceleration_min": -20.0,
+          "acceleration_max": 20.0,
+          "acceleration_range": 40.0,
+          "jerk_mean": 2.5818185312606805,
+          "jerk_std": 48.651764020887185,
+          "jerk_min": -50.0,
+          "jerk_max": 50.0,
+          "jerk_rms": 48.698889060194034,
+          "max_deceleration": -20.0,
+          "deceleration_events": 625,
+          "velocity_zero_crossings": 12,
+          "acceleration_reversals": 557,
+          "motion_smoothness": 0.020121174112942956,
+          "jerk_per_second": 6.411986359425275,
+          "accel_changes_per_second": 73.33794407066189,
+          "distance_traveled": -13.022972624766881,
+          "clip_name": "04akO6mLeIFQRjbq9XwT71QNx0IJ0sTy__Spring_2020.mp4",
+          "scene_id": "04akO6mLeIFQRjbq9XwT71QNx0IJ0sTy__Spring_2020",
+          "total_frames": 1142,
+          "fps": 10.0
+        }
+      },
+      {
+        "comment": "oversteer unnessarily",
+        "expected": "other",
+        "features": {
+          "start_frame": 201,
+          "end_frame": 239,
+          "comment": "oversteer unnessarily",
+          "duration_s": 3.7977137565612793,
+          "num_samples": 570,
+          "sample_rate_hz": 150.09030078036176,
+          "velocity_mean": -1.4960954534563475,
+          "velocity_std": 0.7651351817470874,
+          "velocity_min": -3.664361339872265,
+          "velocity_max": 0.07725997299434584,
+          "velocity_range": 3.7416213128666107,
+          "acceleration_mean": -0.3889391867851831,
+          "acceleration_std": 9.052602656789844,
+          "acceleration_min": -20.0,
+          "acceleration_max": 20.0,
+          "acceleration_range": 40.0,
+          "jerk_mean": -3.139270710628866,
+          "jerk_std": 48.839379270570674,
+          "jerk_min": -50.0,
+          "jerk_max": 50.0,
+          "jerk_rms": 48.897395407730066,
+          "max_deceleration": -20.0,
+          "deceleration_events": 316,
+          "velocity_zero_crossings": 8,
+          "acceleration_reversals": 287,
+          "motion_smoothness": 0.020041126231712704,
+          "jerk_per_second": 12.87548207740787,
+          "accel_changes_per_second": 75.57178302449795,
+          "distance_traveled": -5.681742284719956,
+          "clip_name": "05lBLQJs4ilyORCox6j9ndWAKZc31rs9__Autumn_2020.mp4",
+          "scene_id": "05lBLQJs4ilyORCox6j9ndWAKZc31rs9__Autumn_2020",
+          "total_frames": 1170,
+          "fps": 10.0
+        }
+      }
+    ],
+    "class_mismatches": [
+      {
+        "model": "advanced_ml",
+        "predicted": "pedestrian",
+        "expected": "other",
+        "comment": "unknown object ahead"
+      },
+      {
+        "model": "simple_ml",
+        "predicted": "pedestrian",
+        "expected": "other",
+        "comment": "unknown object ahead"
+      },
+      {
+        "model": "rule_based",
+        "predicted": "unknown",
+        "expected": "other",
+        "comment": "unknown object ahead"
+      },
+      {
+        "model": "deep_learning",
+        "predicted": "pedestrian",
+        "expected": "other",
+        "comment": "unknown object ahead"
+      },
+      {
+        "model": "advanced_ml",
+        "predicted": "overshoot",
+        "expected": "other",
+        "comment": "left turn overshoot nearmiss"
+      },
+      {
+        "model": "simple_ml",
+        "predicted": "nearmiss",
+        "expected": "other",
+        "comment": "left turn overshoot nearmiss"
+      },
+      {
+        "model": "rule_based",
+        "predicted": "unknown",
+        "expected": "other",
+        "comment": "left turn overshoot nearmiss"
+      },
+      {
+        "model": "advanced_ml",
+        "predicted": "hesitation",
+        "expected": "other",
+        "comment": "stop sine overshoot"
+      },
+      {
+        "model": "rule_based",
+        "predicted": "unknown",
+        "expected": "other",
+        "comment": "stop sine overshoot"
+      },
+      {
+        "model": "advanced_ml",
+        "predicted": "overshoot",
+        "expected": "nearmiss",
+        "comment": "narrow near miss"
+      },
+      {
+        "model": "simple_ml",
+        "predicted": "overshoot",
+        "expected": "nearmiss",
+        "comment": "narrow near miss"
+      },
+      {
+        "model": "rule_based",
+        "predicted": "unknown",
+        "expected": "nearmiss",
+        "comment": "narrow near miss"
+      },
+      {
+        "model": "deep_learning",
+        "predicted": "hesitation",
+        "expected": "nearmiss",
+        "comment": "narrow near miss"
+      },
+      {
+        "model": "advanced_ml",
+        "predicted": "pedestrian",
+        "expected": "other",
+        "comment": "oversteer unnessarily"
+      },
+      {
+        "model": "rule_based",
+        "predicted": "unknown",
+        "expected": "other",
+        "comment": "oversteer unnessarily"
+      },
+      {
+        "model": "deep_learning",
+        "predicted": "hesitation",
+        "expected": "other",
+        "comment": "oversteer unnessarily"
+      }
+    ]
+  },
+  "fix_recommendations": {
+    "class_mapping_fix": {
+      "description": "Create unified class mapper",
+      "priority": "HIGH",
+      "implementation": "Map all model outputs to consistent behavior names"
+    },
+    "weight_adjustment": {
+      "description": "Adjust ensemble weights based on individual model performance",
+      "priority": "MEDIUM",
+      "implementation": "Reduce weights for models with <50% accuracy"
+    },
+    "risk_recalibration": {
+      "description": "Recalibrate risk assessment thresholds",
+      "priority": "HIGH",
+      "implementation": "Increase CRITICAL threshold from current aggressive setting"
+    },
+    "confidence_threshold": {
+      "description": "Implement minimum confidence thresholds",
+      "priority": "MEDIUM",
+      "implementation": "Require >0.4 confidence for positive predictions"
+    }
+  }
+}
