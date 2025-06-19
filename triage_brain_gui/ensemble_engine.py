@@ -242,18 +242,52 @@ class FrameAnalyzer:
         }
     
     def _classify_behavior(self, features: Dict, prediction: float) -> str:
-        """Classify driving behavior"""
-        if prediction > 0.8:
-            if features['max_deceleration'] < -15 and features['jerk_rms'] > 35:
+        """FIXED: Classify driving behavior with proper thresholds"""
+        
+        # ✅ FIXED: Much more selective classification
+        # Only classify as dangerous behaviors with high confidence
+        
+        if prediction > 0.85:  # Higher threshold
+            # Very dangerous behaviors
+            if features['max_deceleration'] < -18 and features['jerk_rms'] > 40:
                 return 'nearmiss'
-            elif features['velocity_std'] < 1.0 and features['acceleration_std'] > 8:
+            elif features['velocity_std'] < 0.8 and features['acceleration_std'] > 10:
                 return 'hesitation'
-            elif abs(features['velocity_mean']) > 10:
+            elif abs(features['velocity_mean']) > 12 and features['velocity_std'] > 4:
                 return 'overshoot'
+            elif features['jerk_rms'] > 30 and features['motion_smoothness'] < 0.01:
+                return 'oversteering'
             else:
                 return 'other'
-        elif prediction > 0.6:
-            return 'hesitation' if features['jerk_rms'] > 20 else 'other'
+        elif prediction > 0.7:  # Medium threshold
+            # Moderate risk behaviors
+            if features['jerk_rms'] > 25:
+                return 'hesitation'
+            elif features['motion_smoothness'] < 0.015:
+                return 'nervous'
+            else:
+                return 'other'
+        else:
+            # Most frames should be normal
+            return 'normal'
+    
+    def _classify_behavior_with_bias(self, features: Dict, prediction: float) -> str:
+        """Classification with annotation bias - more lenient for annotated regions"""
+        
+        # Lower thresholds for annotated regions
+        if prediction > 0.6:  # Lower than normal 0.85
+            if features['max_deceleration'] < -12 and features['jerk_rms'] > 25:
+                return 'nearmiss'
+            elif features['velocity_std'] < 1.2 and features['acceleration_std'] > 6:
+                return 'hesitation'
+            elif abs(features['velocity_mean']) > 8:
+                return 'overshoot'
+            elif features['jerk_rms'] > 20:
+                return 'oversteering'
+            else:
+                return 'other'
+        elif prediction > 0.4:  # Even lower for annotated regions
+            return 'hesitation' if features['jerk_rms'] > 15 else 'other'
         else:
             return 'normal'
     
@@ -301,7 +335,7 @@ class ClusterAnalyzer:
         self.annotation_loader = AnnotationLoader()
     
     def analyze_full_scene(self, motion_data: pd.DataFrame, ensemble_model, progress_callback=None, scene_id: str = None) -> Dict:
-        """Analyze full scene with annotation bias"""
+        """FIXED: Analyze scene with proper annotation bias"""
         
         print(f"🔍 Starting scene analysis for: {scene_id}")
         start_time = time.time()
@@ -309,18 +343,32 @@ class ClusterAnalyzer:
         # Get annotations for this scene
         annotated_segments = self.annotation_loader.get_segments_for_scene(scene_id) if scene_id else []
         
-        # Determine frames to analyze
+        # ✅ FIXED: Better frame selection logic
         if annotated_segments:
-            # Focus on annotated regions
+            # Focus HEAVILY on annotated regions
             frame_indices = self._get_annotated_frame_indices(annotated_segments, len(motion_data))
-            print(f"📝 Annotation-biased analysis: {len(frame_indices)} frames")
+            print(f"📝 ANNOTATION-FOCUSED: {len(frame_indices)} frames from {len(annotated_segments)} annotations")
+            
+            # Also add some context frames around annotations
+            context_frames = []
+            for segment in annotated_segments:
+                # Add frames before and after for context
+                start_context = max(0, segment['padded_start'] - 30)  # 3 seconds before
+                end_context = min(len(motion_data) - 1, segment['padded_end'] + 30)  # 3 seconds after
+                context_frames.extend(range(start_context, segment['padded_start']))
+                context_frames.extend(range(segment['padded_end'] + 1, end_context + 1))
+            
+            # Combine annotation frames + context frames
+            all_frames = frame_indices + context_frames
+            frame_indices = sorted(list(set(all_frames)))
+            
         else:
-            # Analyze all frames with sampling
-            sampling_rate = self.config.get('sampling_rate', 1)
+            # No annotations - sample more conservatively
+            sampling_rate = 5  # Every 5th frame instead of every frame
             frame_indices = list(range(0, len(motion_data), sampling_rate))
-            print(f"🔍 Full analysis: {len(frame_indices)} frames")
+            print(f"🔍 NO ANNOTATIONS: Sampling {len(frame_indices)} frames")
         
-        # Analyze frames
+        # Analyze frames with annotation awareness
         frame_analyzer = FrameAnalyzer(ensemble_model)
         frame_results = []
         
@@ -333,10 +381,19 @@ class ClusterAnalyzer:
             
             result = frame_analyzer.analyze_frame(motion_data, frame_idx)
             if result:
-                # Apply annotation bias
-                if self._is_in_annotated_region(frame_idx, annotated_segments):
+                # ✅ FIXED: Apply annotation bias more intelligently
+                in_annotation = self._is_in_annotated_region(frame_idx, annotated_segments)
+                
+                if in_annotation:
                     result['annotation_bias'] = True
-                    result['confidence'] = max(result['confidence'], 0.4)  # Boost confidence
+                    # ✅ FIXED: Boost confidence more conservatively
+                    result['confidence'] = min(0.9, result['confidence'] * 1.3)
+                    # ✅ FIXED: Lower classification threshold for annotated regions
+                    if result['raw_prediction'] > 0.5 and result['classification'] == 'normal':
+                        # Re-classify with lower threshold
+                        result['classification'] = frame_analyzer._classify_behavior_with_bias(
+                            result['features'], result['raw_prediction']
+                        )
                 
                 frame_results.append(result)
         

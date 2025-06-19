@@ -462,7 +462,7 @@ class TriageBrainGUI:
             self.motion_analyzer.highlight_timeline_position(frame_idx, total_frames)
     
     def export_results(self):
-        """Export V2 analysis results"""
+        """Export V2 analysis results - FIXED"""
         if self.current_clip is None:
             messagebox.showwarning("Warning", "No clip loaded")
             return
@@ -471,18 +471,17 @@ class TriageBrainGUI:
             filename = filedialog.asksaveasfilename(
                 defaultextension=".json",
                 filetypes=[("JSON files", "*.json"), ("All files", "*.*")],
-                initialvalue=f"{self.current_clip['scene_id']}_v2_analysis.json"
+                initialfile=f"{self.current_clip['scene_id']}_v2_analysis.json"  # ✅ FIXED
             )
             
             if not filename:
                 return
             
-            # Get V2 analysis data
+            # Rest of export code stays the same...
             scene_id = self.current_clip['scene_id']
             analysis_data = cache_manager.load_cached_analysis(f"{scene_id}_v2") or {}
             motion_summary = self.motion_analyzer.get_motion_summary()
             
-            # Create scene info
             scene_info = {
                 'scene_id': scene_id,
                 'path': self.current_clip['mp4_path'],
@@ -491,7 +490,6 @@ class TriageBrainGUI:
                 'analysis_version': 'V2_ensemble'
             }
             
-            # Export with V2 metadata
             analysis_data['export_metadata'] = {
                 'ensemble_version': 'V2',
                 'models_used': ['XGBoost', 'CNN+Attention', 'Autoencoder', 'SVM RBF'],

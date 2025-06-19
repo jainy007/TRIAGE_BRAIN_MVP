@@ -105,6 +105,7 @@ class VideoPlayer:
             
             # Load first frame
             self.show_frame(0)
+            self.play_btn.config(text="Play")
             
             logger.info(f"Loaded {self.total_frames} frames from scene")
             return True
@@ -144,6 +145,7 @@ class VideoPlayer:
             
             # Show first frame
             self.show_frame(0)
+            self.play_btn.config(text="Play")
             
             logger.info(f"Loaded MP4: {os.path.basename(mp4_path)} ({self.total_frames} frames, {self.fps:.1f} FPS)")
             return True

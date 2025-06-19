@@ -69,3 +69,134 @@
 2025-06-18 21:06:27,885 - INFO - Added 2 STABLE cluster overlays with CORRECT timing
 2025-06-18 21:06:27,885 - INFO - V2 analysis complete: 2 clusters found
 2025-06-18 23:18:03,876 - INFO - V2 application ended
+2025-06-18 23:24:39,918 - INFO - Enhanced video player initialized
+2025-06-18 23:24:40,213 - INFO - Motion analyzer initialized with proper filtering
+2025-06-18 23:24:40,213 - INFO - ============================================================
+2025-06-18 23:24:40,213 - INFO - TRIAGE BRAIN SESSION STARTED
+2025-06-18 23:24:40,213 - INFO - Timestamp: 2025-06-18 23:24:40.213975
+2025-06-18 23:24:40,213 - INFO - ============================================================
+2025-06-18 23:24:40,214 - INFO - Starting Triage Brain GUI with V2 Ensemble
+2025-06-18 23:24:40,319 - INFO - Loaded 50 MP4 clips for V2 analysis
+2025-06-18 23:24:46,377 - INFO - Loading clip for V2 analysis: 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh__Autumn_2020
+2025-06-18 23:24:46,377 - INFO - Loaded cached analysis for scene 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh_v2
+2025-06-18 23:24:46,430 - INFO - Loaded MP4: 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh.mp4 (1155 frames, 10.0 FPS)
+2025-06-18 23:24:46,432 - INFO - Generated enhanced motion data for V2: 1155 samples
+2025-06-18 23:24:46,434 - INFO - Applied proper filtering: vel_range=[-5.51, 6.97]
+2025-06-18 23:24:46,494 - INFO - Processed motion data with proper filtering: 1154 samples
+2025-06-18 23:24:46,494 - INFO - Using cached V2 analysis
+2025-06-18 23:24:46,521 - INFO - Adding overlays: max_time=115.4s, data_points=1154
+2025-06-18 23:24:46,521 - INFO - Cluster 1: nearmiss video_frames 363-366 (36.3-36.6s) -> data_time 36.3-36.6s
+2025-06-18 23:24:46,522 - INFO - Cluster 2: nearmiss video_frames 369-457 (36.9-45.7s) -> data_time 36.9-45.7s
+2025-06-18 23:24:46,549 - INFO - Added 2 STABLE cluster overlays with CORRECT timing
+2025-06-18 23:24:57,142 - INFO - Loading clip for V2 analysis: 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh__Autumn_2020
+2025-06-18 23:24:57,187 - INFO - Loaded MP4: 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh.mp4 (1155 frames, 10.0 FPS)
+2025-06-18 23:24:57,189 - INFO - Generated enhanced motion data for V2: 1155 samples
+2025-06-18 23:24:57,191 - INFO - Applied proper filtering: vel_range=[-5.51, 6.97]
+2025-06-18 23:24:57,248 - INFO - Processed motion data with proper filtering: 1154 samples
+2025-06-18 23:24:57,248 - INFO - Running fresh V2 ensemble analysis
+2025-06-18 23:24:58,130 - INFO - Cached analysis for scene 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh_v2
+2025-06-18 23:24:58,156 - INFO - Adding overlays: max_time=115.4s, data_points=1154
+2025-06-18 23:24:58,156 - INFO - Cluster 1: nearmiss video_frames 482-502 (48.2-50.2s) -> data_time 48.2-50.2s
+2025-06-18 23:24:58,157 - INFO - Cluster 2: other video_frames 363-372 (36.3-37.2s) -> data_time 36.3-37.2s
+2025-06-18 23:24:58,184 - INFO - Added 2 STABLE cluster overlays with CORRECT timing
+2025-06-18 23:24:58,184 - INFO - V2 analysis complete: 2 clusters found
+2025-06-18 23:25:05,717 - INFO - Loading clip for V2 analysis: 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh__Autumn_2020
+2025-06-18 23:25:05,717 - INFO - Loaded cached analysis for scene 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh_v2
+2025-06-18 23:25:05,745 - INFO - Loaded MP4: 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh.mp4 (1155 frames, 10.0 FPS)
+2025-06-18 23:25:05,747 - INFO - Generated enhanced motion data for V2: 1155 samples
+2025-06-18 23:25:05,748 - INFO - Applied proper filtering: vel_range=[-5.51, 6.97]
+2025-06-18 23:25:05,802 - INFO - Processed motion data with proper filtering: 1154 samples
+2025-06-18 23:25:05,802 - INFO - Using cached V2 analysis
+2025-06-18 23:25:05,832 - INFO - Adding overlays: max_time=115.4s, data_points=1154
+2025-06-18 23:25:05,832 - INFO - Cluster 1: nearmiss video_frames 482-502 (48.2-50.2s) -> data_time 48.2-50.2s
+2025-06-18 23:25:05,833 - INFO - Cluster 2: other video_frames 363-372 (36.3-37.2s) -> data_time 36.3-37.2s
+2025-06-18 23:25:05,868 - INFO - Added 2 STABLE cluster overlays with CORRECT timing
+2025-06-18 23:25:11,283 - INFO - Loading clip for V2 analysis: 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh__Autumn_2020
+2025-06-18 23:25:11,315 - INFO - Loaded MP4: 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh.mp4 (1155 frames, 10.0 FPS)
+2025-06-18 23:25:11,317 - INFO - Generated enhanced motion data for V2: 1155 samples
+2025-06-18 23:25:11,319 - INFO - Applied proper filtering: vel_range=[-5.51, 6.97]
+2025-06-18 23:25:11,375 - INFO - Processed motion data with proper filtering: 1154 samples
+2025-06-18 23:25:11,375 - INFO - Running fresh V2 ensemble analysis
+2025-06-18 23:25:12,168 - INFO - Cached analysis for scene 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh_v2
+2025-06-18 23:25:12,193 - INFO - Adding overlays: max_time=115.4s, data_points=1154
+2025-06-18 23:25:12,193 - INFO - Cluster 1: nearmiss video_frames 482-502 (48.2-50.2s) -> data_time 48.2-50.2s
+2025-06-18 23:25:12,193 - INFO - Cluster 2: other video_frames 363-372 (36.3-37.2s) -> data_time 36.3-37.2s
+2025-06-18 23:25:12,218 - INFO - Added 2 STABLE cluster overlays with CORRECT timing
+2025-06-18 23:25:12,218 - INFO - V2 analysis complete: 2 clusters found
+2025-06-18 23:26:03,922 - INFO - Loading clip for V2 analysis: 1YcYdiNw6voi55sqS3YNa7IUmFIcyc6H__Spring_2020
+2025-06-18 23:26:03,950 - INFO - Loaded MP4: 1YcYdiNw6voi55sqS3YNa7IUmFIcyc6H.mp4 (1191 frames, 10.0 FPS)
+2025-06-18 23:26:03,951 - INFO - Generated enhanced motion data for V2: 1191 samples
+2025-06-18 23:26:03,953 - INFO - Applied proper filtering: vel_range=[-6.29, 8.38]
+2025-06-18 23:26:04,002 - INFO - Processed motion data with proper filtering: 1190 samples
+2025-06-18 23:26:04,002 - INFO - Running fresh V2 ensemble analysis
+2025-06-18 23:26:05,139 - INFO - Cached analysis for scene 1YcYdiNw6voi55sqS3YNa7IUmFIcyc6H_v2
+2025-06-18 23:26:05,168 - INFO - Adding overlays: max_time=119.0s, data_points=1190
+2025-06-18 23:26:05,169 - INFO - Cluster 1: oversteering video_frames 934-945 (93.4-94.5s) -> data_time 93.4-94.5s
+2025-06-18 23:26:05,169 - INFO - Cluster 2: nearmiss video_frames 1144-1189 (114.4-118.9s) -> data_time 114.4-118.9s
+2025-06-18 23:26:05,198 - INFO - Added 2 STABLE cluster overlays with CORRECT timing
+2025-06-18 23:26:05,199 - INFO - V2 analysis complete: 2 clusters found
+2025-06-18 23:29:11,383 - INFO - V2 application ended
+2025-06-18 23:29:16,127 - INFO - Enhanced video player initialized
+2025-06-18 23:29:16,430 - INFO - Motion analyzer initialized with proper filtering
+2025-06-18 23:29:16,430 - INFO - ============================================================
+2025-06-18 23:29:16,430 - INFO - TRIAGE BRAIN SESSION STARTED
+2025-06-18 23:29:16,430 - INFO - Timestamp: 2025-06-18 23:29:16.430601
+2025-06-18 23:29:16,430 - INFO - ============================================================
+2025-06-18 23:29:16,430 - INFO - Starting Triage Brain GUI with V2 Ensemble
+2025-06-18 23:29:16,535 - INFO - Loaded 50 MP4 clips for V2 analysis
+2025-06-18 23:29:20,422 - INFO - Loading clip for V2 analysis: 1ZHV39J5CEsYNiamsaR6u7PIIIOxdInn__Autumn_2020
+2025-06-18 23:29:20,481 - INFO - Loaded MP4: 1ZHV39J5CEsYNiamsaR6u7PIIIOxdInn.mp4 (1165 frames, 10.0 FPS)
+2025-06-18 23:29:20,482 - INFO - Generated enhanced motion data for V2: 1165 samples
+2025-06-18 23:29:20,484 - INFO - Applied proper filtering: vel_range=[-6.71, 9.37]
+2025-06-18 23:29:20,541 - INFO - Processed motion data with proper filtering: 1164 samples
+2025-06-18 23:29:20,541 - INFO - Running fresh V2 ensemble analysis
+2025-06-18 23:29:21,619 - INFO - Cached analysis for scene 1ZHV39J5CEsYNiamsaR6u7PIIIOxdInn_v2
+2025-06-18 23:29:21,646 - INFO - Adding overlays: max_time=116.4s, data_points=1164
+2025-06-18 23:29:21,647 - INFO - Cluster 1: other video_frames 937-955 (93.7-95.5s) -> data_time 93.7-95.5s
+2025-06-18 23:29:21,647 - INFO - Cluster 2: oversteering video_frames 956-958 (95.6-95.8s) -> data_time 95.6-95.8s
+2025-06-18 23:29:21,676 - INFO - Added 2 STABLE cluster overlays with CORRECT timing
+2025-06-18 23:29:21,676 - INFO - V2 analysis complete: 2 clusters found
+2025-06-18 23:30:06,450 - INFO - Loading clip for V2 analysis: 1YcYdiNw6voi55sqS3YNa7IUmFIcyc6H__Spring_2020
+2025-06-18 23:30:06,450 - INFO - Loaded cached analysis for scene 1YcYdiNw6voi55sqS3YNa7IUmFIcyc6H_v2
+2025-06-18 23:30:06,488 - INFO - Loaded MP4: 1YcYdiNw6voi55sqS3YNa7IUmFIcyc6H.mp4 (1191 frames, 10.0 FPS)
+2025-06-18 23:30:06,489 - INFO - Generated enhanced motion data for V2: 1191 samples
+2025-06-18 23:30:06,491 - INFO - Applied proper filtering: vel_range=[-6.97, 4.66]
+2025-06-18 23:30:06,542 - INFO - Processed motion data with proper filtering: 1190 samples
+2025-06-18 23:30:06,542 - INFO - Using cached V2 analysis
+2025-06-18 23:30:06,570 - INFO - Adding overlays: max_time=119.0s, data_points=1190
+2025-06-18 23:30:06,570 - INFO - Cluster 1: oversteering video_frames 934-945 (93.4-94.5s) -> data_time 93.4-94.5s
+2025-06-18 23:30:06,571 - INFO - Cluster 2: nearmiss video_frames 1144-1189 (114.4-118.9s) -> data_time 114.4-118.9s
+2025-06-18 23:30:06,601 - INFO - Added 2 STABLE cluster overlays with CORRECT timing
+2025-06-18 23:31:08,450 - INFO - Loading clip for V2 analysis: 07YOTznatmYypvQYpzviEcU3yGPsyaGg__Spring_2020
+2025-06-18 23:31:08,483 - INFO - Loaded MP4: 07YOTznatmYypvQYpzviEcU3yGPsyaGg.mp4 (1149 frames, 10.0 FPS)
+2025-06-18 23:31:08,485 - INFO - Generated enhanced motion data for V2: 1149 samples
+2025-06-18 23:31:08,486 - INFO - Applied proper filtering: vel_range=[-6.17, 7.75]
+2025-06-18 23:31:08,546 - INFO - Processed motion data with proper filtering: 1148 samples
+2025-06-18 23:31:08,547 - INFO - Running fresh V2 ensemble analysis
+2025-06-18 23:31:11,659 - INFO - Cached analysis for scene 07YOTznatmYypvQYpzviEcU3yGPsyaGg_v2
+2025-06-18 23:31:11,686 - INFO - Adding overlays: max_time=114.8s, data_points=1148
+2025-06-18 23:31:11,686 - INFO - Cluster 1: nearmiss video_frames 220-252 (22.0-25.2s) -> data_time 22.0-25.2s
+2025-06-18 23:31:11,687 - INFO - Cluster 2: nearmiss video_frames 902-923 (90.2-92.3s) -> data_time 90.2-92.3s
+2025-06-18 23:31:11,714 - INFO - Added 2 STABLE cluster overlays with CORRECT timing
+2025-06-18 23:31:11,714 - INFO - V2 analysis complete: 2 clusters found
+2025-06-18 23:32:05,653 - INFO - V2 application ended
+2025-06-18 23:37:55,607 - INFO - Enhanced video player initialized
+2025-06-18 23:37:55,908 - INFO - Motion analyzer initialized with proper filtering
+2025-06-18 23:37:55,908 - INFO - ============================================================
+2025-06-18 23:37:55,908 - INFO - TRIAGE BRAIN SESSION STARTED
+2025-06-18 23:37:55,908 - INFO - Timestamp: 2025-06-18 23:37:55.908773
+2025-06-18 23:37:55,908 - INFO - ============================================================
+2025-06-18 23:37:55,908 - INFO - Starting Triage Brain GUI with V2 Ensemble
+2025-06-18 23:37:56,014 - INFO - Loaded 50 MP4 clips for V2 analysis
+2025-06-18 23:38:02,693 - INFO - Loading clip for V2 analysis: 1YcYdiNw6voi55sqS3YNa7IUmFIcyc6H__Spring_2020
+2025-06-18 23:38:02,694 - INFO - Loaded cached analysis for scene 1YcYdiNw6voi55sqS3YNa7IUmFIcyc6H_v2
+2025-06-18 23:38:02,750 - INFO - Loaded MP4: 1YcYdiNw6voi55sqS3YNa7IUmFIcyc6H.mp4 (1191 frames, 10.0 FPS)
+2025-06-18 23:38:02,752 - INFO - Generated enhanced motion data for V2: 1191 samples
+2025-06-18 23:38:02,754 - INFO - Applied proper filtering: vel_range=[-7.45, 7.85]
+2025-06-18 23:38:02,812 - INFO - Processed motion data with proper filtering: 1190 samples
+2025-06-18 23:38:02,812 - INFO - Using cached V2 analysis
+2025-06-18 23:38:02,843 - INFO - Adding overlays: max_time=119.0s, data_points=1190
+2025-06-18 23:38:02,843 - INFO - Cluster 1: oversteering video_frames 934-945 (93.4-94.5s) -> data_time 93.4-94.5s
+2025-06-18 23:38:02,844 - INFO - Cluster 2: nearmiss video_frames 1144-1189 (114.4-118.9s) -> data_time 114.4-118.9s
+2025-06-18 23:38:02,876 - INFO - Added 2 STABLE cluster overlays with CORRECT timing
+2025-06-18 23:50:11,966 - INFO - V2 application ended
