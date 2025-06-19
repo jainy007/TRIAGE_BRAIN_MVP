@@ -21,6 +21,7 @@ from video_player import VideoPlayer
 from motion_analyzer import MotionAnalyzer
 from ensemble_engine import ClusterAnalyzer, EnsemblePanel  # Updated imports
 
+
 class TriageBrainGUI:
     """Clean main GUI for MP4 clip analysis with V2 Ensemble"""
     
@@ -31,6 +32,7 @@ class TriageBrainGUI:
         
         # Data
         self.available_clips = []
+        self.current_annotations = []
         self.current_clip = None
         self.cluster_analyzer = ClusterAnalyzer()
         
@@ -86,26 +88,26 @@ class TriageBrainGUI:
         # Load button
         self.load_button = tk.Button(
             toolbar, 
-            text="Load & Analyze (V2)", 
+            text="Detect Events",  # CHANGED from "Load & Analyze (V2)"
             command=self.load_current_clip,
             bg='lightgreen',
             font=button_font,
             height=2,
-            width=18
+            width=15  # CHANGED from 18
         )
         self.load_button.pack(side=tk.LEFT, padx=15, pady=10)
         
         # Export button
-        self.export_button = tk.Button(
+        self.export_events_button = tk.Button(
             toolbar, 
-            text="Export Results", 
-            command=self.export_results,
-            bg='lightyellow',
+            text="Export Events", 
+            command=self.export_dangerous_event_clips,
+            bg='orange',
             font=button_font,
             height=2,
             width=15
         )
-        self.export_button.pack(side=tk.LEFT, padx=5, pady=10)
+        self.export_events_button.pack(side=tk.LEFT, padx=5, pady=10)
         
         # Status
         self.status_label = tk.Label(toolbar, text="Ready (V2 Ensemble)", fg='blue', font=default_font)
@@ -238,53 +240,55 @@ class TriageBrainGUI:
             self.load_button.config(state='normal')
     
     def load_current_clip(self):
-        """Load and analyze the selected clip with V2 ensemble"""
+        """UPDATED: Load and analyze clip with binary detection"""
         if not self.clip_combo.get():
             return
-        
+
         try:
             # Get selected clip
             clip_idx = self.clip_combo.current()
             self.current_clip = self.available_clips[clip_idx]
-            
+            self.current_annotations = []  # Initialize annotations
+
             mp4_path = self.current_clip['mp4_path']
             scene_id = self.current_clip['scene_id']
-            
-            self.status_label.config(text="Loading video for V2 analysis...", fg='blue')
-            logger.info(f"Loading clip for V2 analysis: {self.current_clip['original_name']}")
-            
+
+            self.status_label.config(text="Loading video for binary detection...", fg='blue')
+            logger.info(f"Loading clip for binary analysis: {self.current_clip['original_name']}")
+
             # Check cache first
-            cached_data = cache_manager.load_cached_analysis(f"{scene_id}_v2")
-            
+            cached_data = cache_manager.load_cached_analysis(f"{scene_id}_binary")
+
             # Load video
             if not self.video_player.load_video_from_mp4(mp4_path):
                 raise RuntimeError("Failed to load MP4 video")
-            
+
             # Generate motion data
             motion_data = self._generate_motion_data(mp4_path)
             if motion_data is None:
                 raise RuntimeError("Failed to generate motion data")
-            
+
             # Load into analyzer
             if not self.motion_analyzer.load_and_process_motion_data(motion_data):
                 raise RuntimeError("Failed to process motion data")
-            
+
             # Handle analysis
             if cached_data:
-                logger.info("Using cached V2 analysis")
+                logger.info("Using cached binary analysis")
                 top_clusters = cached_data.get('top_clusters', [])
-                self._display_results(top_clusters)
-                self.status_label.config(text="Loaded (cached V2 analysis)", fg='green')
+                self.current_annotations = cached_data.get('annotated_segments', [])
+                self._display_binary_results(top_clusters)
+                self.status_label.config(text="Loaded (cached binary analysis)", fg='green')
             else:
-                logger.info("Running fresh V2 ensemble analysis")
-                self._run_v2_analysis(scene_id)
-            
+                logger.info("Running fresh binary detection analysis")
+                self._run_binary_analysis(scene_id)
+
         except Exception as e:
             error_msg = f"Failed to load clip: {e}"
             messagebox.showerror("Error", error_msg)
             self.status_label.config(text="Load error", fg='red')
             logger.error(error_msg)
-    
+
     def _generate_motion_data(self, mp4_path: str) -> Optional[pd.DataFrame]:
         """Generate realistic motion data for MP4"""
         try:
@@ -466,22 +470,22 @@ class TriageBrainGUI:
         if self.current_clip is None:
             messagebox.showwarning("Warning", "No clip loaded")
             return
-        
+
         try:
             filename = filedialog.asksaveasfilename(
                 defaultextension=".json",
                 filetypes=[("JSON files", "*.json"), ("All files", "*.*")],
                 initialfile=f"{self.current_clip['scene_id']}_v2_analysis.json"  # ✅ FIXED
             )
-            
+
             if not filename:
                 return
-            
+
             # Rest of export code stays the same...
             scene_id = self.current_clip['scene_id']
             analysis_data = cache_manager.load_cached_analysis(f"{scene_id}_v2") or {}
             motion_summary = self.motion_analyzer.get_motion_summary()
-            
+
             scene_info = {
                 'scene_id': scene_id,
                 'path': self.current_clip['mp4_path'],
@@ -489,22 +493,22 @@ class TriageBrainGUI:
                 'num_frames_total': self.current_clip['num_frames'],
                 'analysis_version': 'V2_ensemble'
             }
-            
+
             analysis_data['export_metadata'] = {
                 'ensemble_version': 'V2',
                 'models_used': ['XGBoost', 'CNN+Attention', 'Autoencoder', 'SVM RBF'],
                 'export_timestamp': time.strftime('%Y-%m-%d %H:%M:%S')
             }
-            
+
             success = export_manager.export_analysis_results(
                 filename, scene_info, analysis_data, motion_summary
             )
-            
+
             if success:
                 messagebox.showinfo("Success", f"V2 analysis results exported to {filename}")
             else:
                 messagebox.showerror("Error", "Failed to export V2 results")
-                
+
         except Exception as e:
             messagebox.showerror("Error", f"V2 export failed: {e}")
     
@@ -545,6 +549,147 @@ class TriageBrainGUI:
             
         except Exception as e:
             logger.error(f"V2 cleanup error: {e}")
+
+    def _run_binary_analysis(self, scene_id: str):
+        """Run binary detection analysis with progress tracking"""
+        self.show_progress("Starting binary dangerous event detection...")
+
+        def analysis_worker():
+            try:
+                def progress_update(current, total, text=""):
+                    if not self.analysis_cancelled:
+                        self.root.after(0, lambda: self.update_progress(current, total, text))
+
+                analysis_results = self.cluster_analyzer.analyze_full_scene(
+                    self.motion_analyzer.motion_data,
+                    self.ensemble_panel.ensemble_model,
+                    progress_callback=progress_update,
+                    scene_id=scene_id
+                )
+
+                if self.analysis_cancelled:
+                    return
+
+                top_clusters = analysis_results['top_clusters']
+                self.current_annotations = analysis_results.get('annotated_segments', [])
+
+                cache_data = {
+                    'scene_id': f"{scene_id}_binary",
+                    'analysis_timestamp': time.strftime('%Y-%m-%d %H:%M:%S'),
+                    'analysis_version': 'Binary_Detection_MVP',
+                    'frame_predictions': analysis_results['frame_predictions'],
+                    'all_clusters': analysis_results['all_clusters'],
+                    'top_clusters': top_clusters,
+                    'annotated_segments': self.current_annotations
+                }
+
+                cache_manager.save_analysis(f"{scene_id}_binary", cache_data)
+
+                if not self.analysis_cancelled:
+                    self.root.after(0, lambda: self._binary_analysis_complete(top_clusters))
+
+            except Exception as e:
+                logger.error(f"Binary analysis failed: {e}")
+                if not self.analysis_cancelled:
+                    self.root.after(0, lambda: self._analysis_error(str(e)))
+
+        import threading
+        self.analysis_thread = threading.Thread(target=analysis_worker, daemon=True)
+        self.analysis_thread.start()
+
+    def _binary_analysis_complete(self, top_clusters: list):
+        """Handle completed binary analysis"""
+        self.hide_progress()
+        self._display_binary_results(top_clusters)
+        self.status_label.config(text="Binary detection complete - Dangerous events found!", fg='green')
+        logger.info(f"Binary analysis complete: {len(top_clusters)} dangerous events found")
+
+    def _display_binary_results(self, top_clusters: list):
+        """Display binary detection results"""
+        self.motion_analyzer.add_dangerous_event_overlays(top_clusters)
+        self.ensemble_panel.update_display(top_clusters)
+        self.video_player.set_annotation_segments(self.current_annotations)
+
+    def export_dangerous_event_clips(self):
+        """Export detected dangerous event clips"""
+        if self.current_clip is None:
+            messagebox.showwarning("Warning", "No clip loaded")
+            return
+
+        try:
+            scene_id = self.current_clip['scene_id']
+            analysis_data = cache_manager.load_cached_analysis(f"{scene_id}_binary")
+
+            if not analysis_data or not analysis_data.get('top_clusters'):
+                messagebox.showwarning("Warning", "No dangerous events detected to export")
+                return
+
+            export_dir = filedialog.askdirectory(title="Select Export Directory")
+            if not export_dir:
+                return
+
+            top_clusters = analysis_data['top_clusters']
+            mp4_path = self.current_clip['mp4_path']
+            exported_clips = []
+
+            for i, cluster in enumerate(top_clusters):
+                start_time = max(0, cluster.get('export_start_time', cluster['start_frame'] * 0.1) - 2.0)
+                end_time = cluster.get('export_end_time', cluster['end_frame'] * 0.1) + 2.0
+                duration = end_time - start_time
+
+                output_filename = f"{scene_id}_dangerous_event_{i+1}_{start_time:.1f}s-{end_time:.1f}s.mp4"
+                output_path = os.path.join(export_dir, output_filename)
+
+                success = self._extract_mp4_clip(mp4_path, start_time, duration, output_path)
+
+                if success:
+                    metadata = {
+                        'original_clip': self.current_clip['original_name'],
+                        'scene_id': scene_id,
+                        'dangerous_event_number': i + 1,
+                        'start_time_seconds': start_time,
+                        'end_time_seconds': end_time,
+                        'duration_seconds': duration,
+                        'detection_confidence': cluster['avg_confidence'],
+                        'annotation_info': cluster.get('annotation_info'),
+                        'export_timestamp': time.strftime('%Y-%m-%d %H:%M:%S')
+                    }
+
+                    metadata_path = output_path.replace('.mp4', '_metadata.json')
+                    with open(metadata_path, 'w') as f:
+                        json.dump(metadata, f, indent=2)
+
+                    exported_clips.append(output_filename)
+
+            if exported_clips:
+                messagebox.showinfo("Success", 
+                    f"Exported {len(exported_clips)} dangerous event clips to:\n{export_dir}")
+            else:
+                messagebox.showerror("Error", "Failed to export any clips")
+
+        except Exception as e:
+            messagebox.showerror("Error", f"Export failed: {e}")
+
+    def _extract_mp4_clip(self, input_path: str, start_time: float, duration: float, output_path: str) -> bool:
+        """Extract MP4 clip using ffmpeg"""
+        try:
+            import subprocess
+
+            cmd = [
+                'ffmpeg', '-y',  # Overwrite output file
+                '-i', input_path,
+                '-ss', str(start_time),
+                '-t', str(duration),
+                '-c', 'copy',  # Copy without re-encoding for speed
+                output_path
+            ]
+
+            result = subprocess.run(cmd, capture_output=True, text=True)
+            return result.returncode == 0
+
+        except Exception as e:
+            logger.error(f"FFmpeg extraction failed: {e}")
+            return False
 
 def main():
     """Main entry point for V2 GUI"""

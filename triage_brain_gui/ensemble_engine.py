@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Clean, Working Ensemble Engine for Triage Brain GUI
-V2 Ensemble with Annotation-Biased Analysis - COMPLETELY REWRITTEN
+Binary Detection Ensemble Engine - Production MVP Version
+"Something vs Nothing" detection with perfect annotation overlay support
 """
 
 import tkinter as tk
@@ -14,16 +14,17 @@ import json
 from typing import Dict, List, Optional, Tuple
 from utils import logger, get_config, CONFIG
 
-# VERIFIED WORKING PATHS
+# PRODUCTION PATHS
 PROJECT_ROOT = '/home/jainy007/PEM/triage_brain'
 V2_PATH = '/home/jainy007/PEM/triage_brain/src/triage_brain_v2'
 MODEL_PREFIX = '/home/jainy007/PEM/triage_brain/triage_brain_model'
 ANNOTATIONS_FILE = '/home/jainy007/PEM/triage_brain/assets/data/annotated_clips.jsonl'
 
-# ANNOTATION SETTINGS
-ANNOTATION_PADDING_FRAMES = 15  # 1.5 seconds at 10 FPS
+# BINARY DETECTION SETTINGS
+ANNOTATION_PADDING_FRAMES = 30  # 3 seconds at 10 FPS (increased from 1.5s)
+DETECTION_THRESHOLD = 0.3  # Lower threshold for binary detection
 
-# EXACT V2 FEATURE ORDER (from working checkpoint)
+# V2 FEATURE ORDER (unchanged)
 V2_FEATURE_ORDER = [
     'duration_s', 'num_samples', 'sample_rate_hz', 'velocity_mean', 'velocity_std', 
     'velocity_min', 'velocity_max', 'velocity_range', 'acceleration_mean', 'acceleration_std', 
@@ -38,13 +39,13 @@ sys.path.insert(0, V2_PATH)
 try:
     from ensemble_triage_brain import EnsembleTriageBrain, label_segment, preprocess_data
     ENSEMBLE_AVAILABLE = True
-    print("✅ V2 ensemble imported successfully")
+    print("✅ V2 ensemble imported for binary detection")
 except ImportError as e:
     print(f"❌ V2 ensemble import failed: {e}")
     ENSEMBLE_AVAILABLE = False
 
 class AnnotationLoader:
-    """Handles loading and parsing annotation data"""
+    """Loads and manages annotation data for binary detection"""
     
     def __init__(self):
         self.annotations_by_scene_id = {}
@@ -57,7 +58,7 @@ class AnnotationLoader:
                 print(f"❌ Annotations file not found: {ANNOTATIONS_FILE}")
                 return
             
-            print(f"📝 Loading annotations from: {ANNOTATIONS_FILE}")
+            print(f"📝 Loading annotations for binary detection: {ANNOTATIONS_FILE}")
             
             with open(ANNOTATIONS_FILE, 'r') as f:
                 for line_num, line in enumerate(f, 1):
@@ -66,18 +67,16 @@ class AnnotationLoader:
                         continue
                     
                     try:
-                        # Parse JSON
                         annotation = json.loads(line)
                         clip_name = annotation['clip']
                         
-                        # Extract scene ID from clip name
-                        # Format: "01bb304d7bd835f8bbef7086b688e35e__Summer_2019.mp4"
+                        # Extract scene ID
                         if '__' in clip_name:
                             scene_id = clip_name.split('__')[0]
                         else:
                             scene_id = clip_name.replace('.mp4', '')
                         
-                        # Process segments
+                        # Process segments with binary detection focus
                         segments = []
                         for segment in annotation.get('segments', []):
                             segments.append({
@@ -85,14 +84,14 @@ class AnnotationLoader:
                                 'end': segment['end'],
                                 'padded_start': max(0, segment['start'] - ANNOTATION_PADDING_FRAMES),
                                 'padded_end': segment['end'] + ANNOTATION_PADDING_FRAMES,
-                                'comment': segment.get('comment', '')
+                                'comment': segment.get('comment', ''),
+                                'annotation_type': 'dangerous_event'  # Binary: all are just "something"
                             })
                         
-                        # Store by scene ID
                         self.annotations_by_scene_id[scene_id] = segments
                         
                         if line_num <= 3:
-                            print(f"  📋 {scene_id}: {len(segments)} segments")
+                            print(f"  📋 {scene_id}: {len(segments)} dangerous events")
                             
                     except json.JSONDecodeError:
                         print(f"❌ Invalid JSON on line {line_num}")
@@ -101,7 +100,7 @@ class AnnotationLoader:
                         print(f"❌ Error processing line {line_num}: {e}")
                         continue
             
-            print(f"✅ Loaded {len(self.annotations_by_scene_id)} annotated clips")
+            print(f"✅ Loaded {len(self.annotations_by_scene_id)} clips for binary detection")
             
         except Exception as e:
             print(f"❌ Failed to load annotations: {e}")
@@ -115,30 +114,28 @@ class AnnotationLoader:
         # Direct match
         if scene_id in self.annotations_by_scene_id:
             segments = self.annotations_by_scene_id[scene_id]
-            print(f"✅ Found {len(segments)} annotations for scene: {scene_id}")
+            print(f"✅ Found {len(segments)} dangerous events for: {scene_id}")
             return segments
         
-        # Try partial match
+        # Partial match
         for stored_id in self.annotations_by_scene_id.keys():
             if scene_id in stored_id or stored_id in scene_id:
                 segments = self.annotations_by_scene_id[stored_id]
-                print(f"✅ Partial match: {stored_id} -> {len(segments)} annotations")
+                print(f"✅ Partial match: {stored_id} -> {len(segments)} dangerous events")
                 return segments
         
-        print(f"❌ No annotations found for scene: {scene_id}")
+        print(f"❌ No dangerous events found for: {scene_id}")
         return []
 
-class FrameAnalyzer:
-    """Analyzes individual frames using V2 ensemble"""
+class BinaryFrameAnalyzer:
+    """Binary frame analysis: Something vs Nothing"""
     
     def __init__(self, ensemble_model):
         self.ensemble_model = ensemble_model
-        self.risk_multipliers = get_config('risk_multipliers')
     
     def extract_features(self, motion_data: pd.DataFrame, frame_idx: int) -> Optional[Dict]:
-        """Extract features for a frame using V2 feature order"""
+        """Extract features for binary detection"""
         
-        # Create analysis window
         window_size = 10
         start_idx = max(0, frame_idx - window_size)
         end_idx = min(len(motion_data), frame_idx + window_size + 1)
@@ -151,9 +148,9 @@ class FrameAnalyzer:
         acceleration = window_data['acceleration'] 
         jerk = window_data['jerk']
         
-        # Calculate all V2 features
         duration = float(window_data['time'].iloc[-1] - window_data['time'].iloc[0])
         
+        # Calculate all V2 features
         features = {
             'duration_s': duration,
             'num_samples': len(window_data),
@@ -186,14 +183,14 @@ class FrameAnalyzer:
         # Return in exact V2 order
         return {feature: features[feature] for feature in V2_FEATURE_ORDER}
     
-    def analyze_frame(self, motion_data: pd.DataFrame, frame_idx: int) -> Optional[Dict]:
-        """Analyze a single frame"""
+    def analyze_frame_binary(self, motion_data: pd.DataFrame, frame_idx: int) -> Optional[Dict]:
+        """Binary frame analysis: detect something vs nothing"""
         
         features = self.extract_features(motion_data, frame_idx)
         if features is None:
             return None
         
-        # Use V2 ensemble if available
+        # Use V2 ensemble for binary detection
         if self.ensemble_model and ENSEMBLE_AVAILABLE:
             try:
                 # Create DataFrame for V2
@@ -201,334 +198,278 @@ class FrameAnalyzer:
                 features_df['start_frame'] = frame_idx
                 features_df['end_frame'] = frame_idx + 10
                 features_df['comment'] = f"frame_{frame_idx}"
-                features_df['clip_name'] = "analysis"
+                features_df['clip_name'] = "binary_analysis"
                 features_df['scene_id'] = "current"
                 features_df['total_frames'] = len(motion_data)
                 features_df['fps'] = 10.0
                 
-                # Preprocess and predict
+                # Get ensemble prediction
                 X, y, processed = preprocess_data(features_df)
                 predictions = self.ensemble_model.predict(X)
                 prediction = predictions[0]
                 
-                # Classify behavior
-                behavior = self._classify_behavior(features, prediction)
-                confidence = self._calculate_confidence(prediction)
-                risk_level = self._assess_risk(features, prediction)
-                risk_score = confidence * self.risk_multipliers.get(risk_level, 0.25)
+                # BINARY CLASSIFICATION with lower threshold
+                if prediction > DETECTION_THRESHOLD:
+                    classification = 'something_detected'
+                    confidence = min(0.95, max(0.4, prediction))
+                    risk_level = 'DETECTED'
+                else:
+                    classification = 'normal'
+                    confidence = max(0.3, 1.0 - prediction)
+                    risk_level = 'NORMAL'
                 
                 return {
                     'frame_idx': frame_idx,
-                    'classification': behavior,
+                    'classification': classification,
                     'confidence': confidence,
                     'risk_level': risk_level,
-                    'risk_score': risk_score,
                     'raw_prediction': float(prediction),
-                    'features': features
+                    'features': features,
+                    'strategy': 'binary_v2_ensemble'
                 }
                 
             except Exception as e:
-                logger.error(f"V2 prediction failed for frame {frame_idx}: {e}")
+                logger.warning(f"V2 binary prediction failed for frame {frame_idx}: {e}")
         
-        # Fallback analysis
+        # Fallback binary detection
+        velocity_var = features['velocity_std']
+        jerk_rms = features['jerk_rms']
+        acceleration_var = features['acceleration_std']
+        
+        # Simple motion-based detection
+        if velocity_var > 2.0 or jerk_rms > 20 or acceleration_var > 5.0:
+            return {
+                'frame_idx': frame_idx,
+                'classification': 'something_detected',
+                'confidence': 0.6,
+                'risk_level': 'DETECTED',
+                'raw_prediction': 0.6,
+                'features': features,
+                'strategy': 'fallback_motion_detection'
+            }
+        
         return {
             'frame_idx': frame_idx,
-            'classification': 'other',
-            'confidence': 0.5,
-            'risk_level': 'LOW',
-            'risk_score': 0.3,
-            'raw_prediction': 0.5,
-            'features': features
+            'classification': 'normal',
+            'confidence': 0.4,
+            'risk_level': 'NORMAL',
+            'raw_prediction': 0.3,
+            'features': features,
+            'strategy': 'fallback_normal'
         }
     
-    def _classify_behavior(self, features: Dict, prediction: float) -> str:
-        """FIXED: Classify driving behavior with proper thresholds"""
-        
-        # ✅ FIXED: Much more selective classification
-        # Only classify as dangerous behaviors with high confidence
-        
-        if prediction > 0.85:  # Higher threshold
-            # Very dangerous behaviors
-            if features['max_deceleration'] < -18 and features['jerk_rms'] > 40:
-                return 'nearmiss'
-            elif features['velocity_std'] < 0.8 and features['acceleration_std'] > 10:
-                return 'hesitation'
-            elif abs(features['velocity_mean']) > 12 and features['velocity_std'] > 4:
-                return 'overshoot'
-            elif features['jerk_rms'] > 30 and features['motion_smoothness'] < 0.01:
-                return 'oversteering'
-            else:
-                return 'other'
-        elif prediction > 0.7:  # Medium threshold
-            # Moderate risk behaviors
-            if features['jerk_rms'] > 25:
-                return 'hesitation'
-            elif features['motion_smoothness'] < 0.015:
-                return 'nervous'
-            else:
-                return 'other'
-        else:
-            # Most frames should be normal
-            return 'normal'
-    
-    def _classify_behavior_with_bias(self, features: Dict, prediction: float) -> str:
-        """Classification with annotation bias - more lenient for annotated regions"""
-        
-        # Lower thresholds for annotated regions
-        if prediction > 0.6:  # Lower than normal 0.85
-            if features['max_deceleration'] < -12 and features['jerk_rms'] > 25:
-                return 'nearmiss'
-            elif features['velocity_std'] < 1.2 and features['acceleration_std'] > 6:
-                return 'hesitation'
-            elif abs(features['velocity_mean']) > 8:
-                return 'overshoot'
-            elif features['jerk_rms'] > 20:
-                return 'oversteering'
-            else:
-                return 'other'
-        elif prediction > 0.4:  # Even lower for annotated regions
-            return 'hesitation' if features['jerk_rms'] > 15 else 'other'
-        else:
-            return 'normal'
-    
-    def _calculate_confidence(self, prediction: float) -> float:
-        """Calculate confidence score"""
-        return min(0.95, max(0.3, abs(prediction - 0.5) * 2 + 0.1))
-    
-    def _assess_risk(self, features: Dict, prediction: float) -> str:
-        """Assess risk level"""
-        risk_factors = 0
-        if features['jerk_rms'] > 35:
-            risk_factors += 1
-        if features['max_deceleration'] < -15:
-            risk_factors += 1
-        if features['motion_smoothness'] < 0.015:
-            risk_factors += 1
-        if prediction > 0.8:
-            risk_factors += 1
-        
-        if risk_factors >= 3:
-            return 'HIGH'
-        elif risk_factors >= 2:
-            return 'MEDIUM'
-        else:
-            return 'LOW'
-    
     def _count_zero_crossings(self, series: pd.Series) -> int:
-        """Count zero crossings"""
         if len(series) < 2:
             return 0
         return int(((series[:-1] * series[1:]) < 0).sum())
     
     def _count_sign_changes(self, series: pd.Series) -> int:
-        """Count sign changes"""
         if len(series) < 2:
             return 0
         signs = np.sign(series)
         return int((np.diff(signs) != 0).sum())
 
 class ClusterAnalyzer:
-    """Analyzes full scenes and creates clusters with annotation bias"""
+    """Binary cluster analysis for dangerous event detection"""
     
     def __init__(self):
         self.config = get_config('clustering')
         self.annotation_loader = AnnotationLoader()
     
     def analyze_full_scene(self, motion_data: pd.DataFrame, ensemble_model, progress_callback=None, scene_id: str = None) -> Dict:
-        """FIXED: Analyze scene with proper annotation bias"""
+        """Binary scene analysis: find dangerous events"""
         
-        print(f"🔍 Starting scene analysis for: {scene_id}")
+        logger.analysis(f"Starting BINARY detection analysis for: {scene_id}")
         start_time = time.time()
         
-        # Get annotations for this scene
+        # Get dangerous event annotations
         annotated_segments = self.annotation_loader.get_segments_for_scene(scene_id) if scene_id else []
         
-        # ✅ FIXED: Better frame selection logic
+        # Determine frame indices for analysis
         if annotated_segments:
-            # Focus HEAVILY on annotated regions
+            # Focus heavily on annotated dangerous events + context
             frame_indices = self._get_annotated_frame_indices(annotated_segments, len(motion_data))
-            print(f"📝 ANNOTATION-FOCUSED: {len(frame_indices)} frames from {len(annotated_segments)} annotations")
-            
-            # Also add some context frames around annotations
-            context_frames = []
-            for segment in annotated_segments:
-                # Add frames before and after for context
-                start_context = max(0, segment['padded_start'] - 30)  # 3 seconds before
-                end_context = min(len(motion_data) - 1, segment['padded_end'] + 30)  # 3 seconds after
-                context_frames.extend(range(start_context, segment['padded_start']))
-                context_frames.extend(range(segment['padded_end'] + 1, end_context + 1))
-            
-            # Combine annotation frames + context frames
-            all_frames = frame_indices + context_frames
-            frame_indices = sorted(list(set(all_frames)))
-            
+            print(f"📝 DANGEROUS EVENT FOCUS: {len(frame_indices)} frames around {len(annotated_segments)} events")
         else:
-            # No annotations - sample more conservatively
-            sampling_rate = 5  # Every 5th frame instead of every frame
+            # No annotations - broader sampling
+            sampling_rate = 5
             frame_indices = list(range(0, len(motion_data), sampling_rate))
             print(f"🔍 NO ANNOTATIONS: Sampling {len(frame_indices)} frames")
         
-        # Analyze frames with annotation awareness
-        frame_analyzer = FrameAnalyzer(ensemble_model)
+        # Binary frame analysis
+        frame_analyzer = BinaryFrameAnalyzer(ensemble_model)
         frame_results = []
         
         for i, frame_idx in enumerate(frame_indices):
             if progress_callback:
                 try:
-                    progress_callback(i, len(frame_indices), f"Analyzing frame {frame_idx}")
+                    progress_callback(i, len(frame_indices), f"Binary detection: frame {frame_idx}")
                 except:
                     pass
             
-            result = frame_analyzer.analyze_frame(motion_data, frame_idx)
+            result = frame_analyzer.analyze_frame_binary(motion_data, frame_idx)
             if result:
-                # ✅ FIXED: Apply annotation bias more intelligently
-                in_annotation = self._is_in_annotated_region(frame_idx, annotated_segments)
-                
-                if in_annotation:
+                # Apply annotation bias for dangerous events
+                if self._is_in_annotated_region(frame_idx, annotated_segments):
                     result['annotation_bias'] = True
-                    # ✅ FIXED: Boost confidence more conservatively
-                    result['confidence'] = min(0.9, result['confidence'] * 1.3)
-                    # ✅ FIXED: Lower classification threshold for annotated regions
-                    if result['raw_prediction'] > 0.5 and result['classification'] == 'normal':
-                        # Re-classify with lower threshold
-                        result['classification'] = frame_analyzer._classify_behavior_with_bias(
-                            result['features'], result['raw_prediction']
-                        )
+                    result['in_dangerous_event'] = True
+                    # Find the specific annotation for overlay
+                    result['annotation_info'] = self._get_annotation_for_frame(frame_idx, annotated_segments)
+                    # Boost confidence for known dangerous events
+                    result['confidence'] = min(0.95, result['confidence'] * 1.2)
+                else:
+                    result['annotation_bias'] = False
+                    result['in_dangerous_event'] = False
+                    result['annotation_info'] = None
                 
                 frame_results.append(result)
         
-        # Create clusters
-        clusters = self._create_clusters(frame_results, annotated_segments)
-        top_clusters = self._select_top_clusters(clusters)
+        # Create binary clusters (dangerous event regions)
+        clusters = self._create_binary_clusters(frame_results, annotated_segments)
+        top_clusters = self._select_top_binary_clusters(clusters)
         
         elapsed = time.time() - start_time
-        print(f"✅ Analysis complete: {len(top_clusters)} clusters in {elapsed:.1f}s")
+        bias_type = "DANGEROUS EVENT FOCUS" if annotated_segments else "GENERAL SAMPLING"
+        logger.analysis(f"Binary {bias_type} analysis complete: {len(top_clusters)} dangerous regions in {elapsed:.1f}s")
         
         return {
             'frame_predictions': frame_results,
             'all_clusters': clusters,
             'top_clusters': top_clusters,
             'annotation_bias': len(annotated_segments) > 0,
+            'dangerous_events_found': len(top_clusters),
             'annotated_segments': annotated_segments
         }
     
     def _get_annotated_frame_indices(self, segments: List[Dict], total_frames: int) -> List[int]:
-        """Get frame indices for annotated regions with padding"""
+        """Get frame indices for dangerous event regions with padding"""
         indices = []
         for segment in segments:
             start = segment['padded_start']
             end = min(segment['padded_end'], total_frames - 1)
             indices.extend(range(start, end + 1))
         
-        return sorted(list(set(indices)))  # Remove duplicates
+        return sorted(list(set(indices)))
     
     def _is_in_annotated_region(self, frame_idx: int, segments: List[Dict]) -> bool:
-        """Check if frame is in an annotated region"""
+        """Check if frame is in a dangerous event region"""
         for segment in segments:
             if segment['padded_start'] <= frame_idx <= segment['padded_end']:
                 return True
         return False
     
-    def _create_clusters(self, frame_results: List[Dict], annotated_segments: List[Dict]) -> List[Dict]:
-        """Create clusters from frame results"""
-        if not frame_results:
+    def _get_annotation_for_frame(self, frame_idx: int, segments: List[Dict]) -> Optional[Dict]:
+        """Get annotation info for frame (for overlay display)"""
+        for segment in segments:
+            if segment['start'] <= frame_idx <= segment['end']:  # Original range, not padded
+                return {
+                    'comment': segment['comment'],
+                    'start_frame': segment['start'],
+                    'end_frame': segment['end'],
+                    'frame_in_event': frame_idx - segment['start']
+                }
+        return None
+    
+    def _create_binary_clusters(self, frame_results: List[Dict], annotated_segments: List[Dict]) -> List[Dict]:
+        """Create clusters for dangerous event regions"""
+        
+        # Only keep detected events
+        detected_events = [r for r in frame_results if r['classification'] == 'something_detected']
+        
+        if not detected_events:
             return []
         
         # Sort by frame index
-        sorted_results = sorted(frame_results, key=lambda x: x['frame_idx'])
+        sorted_events = sorted(detected_events, key=lambda x: x['frame_idx'])
         
         clusters = []
         current_cluster = None
-        gap_threshold = self.config.get('gap_threshold_frames', 10)
+        gap_threshold = 20  # 2 seconds gap
         
-        for result in sorted_results:
-            if result['classification'] == 'normal':
-                continue
+        for event in sorted_events:
+            frame_idx = event['frame_idx']
             
-            frame_idx = result['frame_idx']
-            classification = result['classification']
-            
-            # Start new cluster or continue existing
             if (current_cluster is None or 
-                current_cluster['classification'] != classification or
                 frame_idx - current_cluster['end_frame'] > gap_threshold):
                 
                 if current_cluster:
-                    clusters.append(self._finalize_cluster(current_cluster, annotated_segments))
+                    clusters.append(self._finalize_binary_cluster(current_cluster, annotated_segments))
                 
                 current_cluster = {
-                    'classification': classification,
                     'start_frame': frame_idx,
                     'end_frame': frame_idx,
                     'frames': [frame_idx],
-                    'predictions': [result]
+                    'predictions': [event],
+                    'dangerous_event_type': 'detected'
                 }
             else:
                 current_cluster['end_frame'] = frame_idx
                 current_cluster['frames'].append(frame_idx)
-                current_cluster['predictions'].append(result)
+                current_cluster['predictions'].append(event)
         
         if current_cluster:
-            clusters.append(self._finalize_cluster(current_cluster, annotated_segments))
+            clusters.append(self._finalize_binary_cluster(current_cluster, annotated_segments))
         
         return clusters
     
-    def _finalize_cluster(self, cluster: Dict, annotated_segments: List[Dict]) -> Dict:
-        """Finalize cluster with scoring"""
+    def _finalize_binary_cluster(self, cluster: Dict, annotated_segments: List[Dict]) -> Dict:
+        """Finalize binary cluster for dangerous event"""
+        
         predictions = cluster['predictions']
         
-        # Calculate metrics
         avg_confidence = np.mean([p['confidence'] for p in predictions])
         max_confidence = np.max([p['confidence'] for p in predictions])
-        risk_levels = [p['risk_level'] for p in predictions]
-        dominant_risk = max(set(risk_levels), key=risk_levels.count)
-        
         duration_frames = cluster['end_frame'] - cluster['start_frame'] + 1
         duration_seconds = duration_frames * 0.1
         
-        # Check if in annotated region
-        in_annotation = any(
-            any(segment['padded_start'] <= frame <= segment['padded_end'] 
-                for segment in annotated_segments)
-            for frame in cluster['frames']
-        )
+        # Check if this cluster overlaps with known dangerous events
+        overlaps_annotation = False
+        annotation_info = None
         
-        # Calculate score with annotation bias
-        risk_multipliers = get_config('risk_multipliers')
-        base_score = avg_confidence * risk_multipliers.get(dominant_risk, 0.25)
-        annotation_bonus = 2.0 if in_annotation else 1.0
+        for segment in annotated_segments:
+            if (cluster['start_frame'] <= segment['end'] and 
+                cluster['end_frame'] >= segment['start']):
+                overlaps_annotation = True
+                annotation_info = segment
+                break
+        
+        # Calculate final score with annotation boost
+        base_score = avg_confidence
+        annotation_bonus = 2.0 if overlaps_annotation else 1.0
         final_score = base_score * annotation_bonus
         
         cluster.update({
+            'classification': 'dangerous_event_detected',
             'avg_confidence': avg_confidence,
             'max_confidence': max_confidence,
-            'dominant_risk_level': dominant_risk,
             'duration_frames': duration_frames,
             'duration_seconds': duration_seconds,
             'final_score': final_score,
-            'in_annotated_region': in_annotation,
-            'annotation_bonus': annotation_bonus
+            'overlaps_annotation': overlaps_annotation,
+            'annotation_info': annotation_info,
+            'annotation_bonus': annotation_bonus,
+            'export_start_time': cluster['start_frame'] * 0.1,
+            'export_end_time': cluster['end_frame'] * 0.1
         })
         
         return cluster
     
-    def _select_top_clusters(self, clusters: List[Dict]) -> List[Dict]:
-        """Select top clusters by score"""
+    def _select_top_binary_clusters(self, clusters: List[Dict]) -> List[Dict]:
+        """Select top dangerous event clusters"""
         if not clusters:
             return []
         
-        # Filter by minimum duration
-        min_duration = 3
+        # Filter by minimum duration (1 second)
+        min_duration = 10
         valid_clusters = [c for c in clusters if c['duration_frames'] >= min_duration]
         
-        # Sort by score and take top k
-        k = self.config.get('top_k_clusters', 2)
-        sorted_clusters = sorted(valid_clusters, key=lambda x: x['final_score'], reverse=True)
+        # Sort by final score and return top 3
+        valid_clusters.sort(key=lambda x: x['final_score'], reverse=True)
         
-        return sorted_clusters[:k]
+        return valid_clusters[:3]
 
 class EnsemblePanel:
-    """GUI panel for ensemble analysis results"""
+    """GUI panel for binary detection results"""
     
     def __init__(self, parent):
         self.parent = parent
@@ -537,120 +478,106 @@ class EnsemblePanel:
         self.load_model()
     
     def setup_ui(self):
-        """Setup the UI components"""
-        # Main frame
-        self.frame = tk.LabelFrame(self.parent, text="V2 Ensemble Analysis", font=('Arial', 14, 'bold'))
+        """Setup UI for binary detection"""
+        self.frame = tk.LabelFrame(self.parent, text="Dangerous Event Detection", font=('Arial', 14, 'bold'))
         self.frame.pack(fill=tk.X, padx=5, pady=5)
         
         # Results display
         results_frame = tk.Frame(self.frame)
         results_frame.pack(fill=tk.X, padx=10, pady=5)
         
-        tk.Label(results_frame, text="Behavior:", font=('Arial', 12, 'bold')).grid(row=0, column=0, sticky='w')
-        self.behavior_label = tk.Label(results_frame, text="Not analyzed", font=('Arial', 12), fg='blue')
-        self.behavior_label.grid(row=0, column=1, sticky='w', padx=10)
+        tk.Label(results_frame, text="Status:", font=('Arial', 12, 'bold')).grid(row=0, column=0, sticky='w')
+        self.status_label = tk.Label(results_frame, text="No analysis", font=('Arial', 12), fg='blue')
+        self.status_label.grid(row=0, column=1, sticky='w', padx=10)
         
         tk.Label(results_frame, text="Confidence:", font=('Arial', 12, 'bold')).grid(row=1, column=0, sticky='w')
         self.confidence_label = tk.Label(results_frame, text="0.000", font=('Arial', 12))
         self.confidence_label.grid(row=1, column=1, sticky='w', padx=10)
         
-        tk.Label(results_frame, text="Risk Level:", font=('Arial', 12, 'bold')).grid(row=2, column=0, sticky='w')
-        self.risk_label = tk.Label(results_frame, text="UNKNOWN", font=('Arial', 12, 'bold'), fg='gray')
-        self.risk_label.grid(row=2, column=1, sticky='w', padx=10)
+        tk.Label(results_frame, text="Events Found:", font=('Arial', 12, 'bold')).grid(row=2, column=0, sticky='w')
+        self.events_label = tk.Label(results_frame, text="0", font=('Arial', 12, 'bold'), fg='gray')
+        self.events_label.grid(row=2, column=1, sticky='w', padx=10)
         
         # Status display
-        status_frame = tk.LabelFrame(self.frame, text="Model Status", font=('Arial', 12, 'bold'))
+        status_frame = tk.LabelFrame(self.frame, text="Detection Status", font=('Arial', 12, 'bold'))
         status_frame.pack(fill=tk.X, padx=10, pady=5)
         
         self.status_text = tk.Text(status_frame, height=4, width=50, font=('Courier', 10))
         self.status_text.pack(padx=5, pady=5)
     
     def load_model(self):
-        """Load the V2 ensemble model"""
+        """Load V2 ensemble for binary detection"""
         try:
             if not ENSEMBLE_AVAILABLE:
                 self.status_text.insert(tk.END, "⚠️ V2 ensemble not available\n")
-                return
-            
-            # Check model files
-            model_files = [
-                f"{MODEL_PREFIX}_xgboost.pkl",
-                f"{MODEL_PREFIX}_cnn_attention.pkl",
-                f"{MODEL_PREFIX}_autoencoder.pkl", 
-                f"{MODEL_PREFIX}_svm_rbf.pkl"
-            ]
-            
-            missing = [f for f in model_files if not os.path.exists(f)]
-            if missing:
-                self.status_text.insert(tk.END, "❌ Missing model files:\n")
-                for file in missing:
-                    self.status_text.insert(tk.END, f"  • {os.path.basename(file)}\n")
                 return
             
             # Load ensemble
             self.ensemble_model = EnsembleTriageBrain()
             self.ensemble_model.load(MODEL_PREFIX)
             
-            self.status_text.insert(tk.END, "✅ V2 Ensemble loaded successfully!\n")
-            self.status_text.insert(tk.END, f"📂 Models: {len(self.ensemble_model.models)}\n")
+            self.status_text.insert(tk.END, "✅ Binary Detection Ready!\n")
+            self.status_text.insert(tk.END, f"📂 V2 Ensemble Loaded\n")
+            self.status_text.insert(tk.END, "🎯 Mode: Something vs Nothing\n")
             
         except Exception as e:
             self.status_text.insert(tk.END, f"❌ Error loading models: {e}\n")
             self.ensemble_model = None
     
     def update_display(self, top_clusters: List[Dict]):
-        """Update display with analysis results"""
+        """Update display with binary detection results"""
         
         if not top_clusters:
-            self.behavior_label.config(text="No risks detected")
+            self.status_label.config(text="No dangerous events detected")
             self.confidence_label.config(text="N/A")
-            self.risk_label.config(text="LOW", fg='green')
+            self.events_label.config(text="0", fg='green')
             
             self.status_text.delete(1.0, tk.END)
-            self.status_text.insert(tk.END, "Analysis complete - No significant risks found.\n")
+            self.status_text.insert(tk.END, "Binary Detection Complete - No dangerous events found.\n")
             return
         
-        # Show top cluster
+        # Show results
         top_cluster = top_clusters[0]
         
-        self.behavior_label.config(text=top_cluster['classification'])
+        self.status_label.config(text="Dangerous events detected")
         self.confidence_label.config(text=f"{top_cluster['avg_confidence']:.3f}")
-        
-        # Risk level with color
-        risk_level = top_cluster['dominant_risk_level']
-        colors = {'LOW': 'green', 'MEDIUM': 'orange', 'HIGH': 'red'}
-        self.risk_label.config(text=risk_level, fg=colors.get(risk_level, 'gray'))
+        self.events_label.config(text=str(len(top_clusters)), fg='red')
         
         # Show summary
         self.status_text.delete(1.0, tk.END)
-        self.status_text.insert(tk.END, f"Found {len(top_clusters)} risk clusters:\n\n")
+        self.status_text.insert(tk.END, f"🚨 Found {len(top_clusters)} Dangerous Event Regions:\n\n")
         
         for i, cluster in enumerate(top_clusters):
-            annotation_mark = "📝" if cluster.get('in_annotated_region', False) else "🔍"
+            annotation_mark = "📝" if cluster.get('overlaps_annotation', False) else "🔍"
+            start_time = cluster.get('export_start_time', 0)
+            end_time = cluster.get('export_end_time', 0)
+            
             self.status_text.insert(tk.END, 
-                f"{annotation_mark} {i+1}. {cluster['classification']} "
-                f"({cluster['duration_seconds']:.1f}s, score: {cluster['final_score']:.3f})\n")
+                f"{annotation_mark} {i+1}. Event at {start_time:.1f}s-{end_time:.1f}s "
+                f"(conf: {cluster['avg_confidence']:.3f})\n")
+        
+        logger.analysis(f"Updated binary detection display with {len(top_clusters)} dangerous events")
 
 
-# Main test function
+# Test function for binary detection
 if __name__ == "__main__":
-    print("🧪 Testing Clean Ensemble Engine...")
+    print("🧪 Testing Binary Detection Ensemble Engine...")
     
     # Test annotation loading
     loader = AnnotationLoader()
-    print(f"Loaded {len(loader.annotations_by_scene_id)} annotations")
+    print(f"Loaded {len(loader.annotations_by_scene_id)} clips for binary detection")
     
     if loader.annotations_by_scene_id:
         test_scene_id = list(loader.annotations_by_scene_id.keys())[0]
         segments = loader.get_segments_for_scene(test_scene_id)
-        print(f"Test scene {test_scene_id}: {len(segments)} segments")
+        print(f"Test scene {test_scene_id}: {len(segments)} dangerous events")
     
     # Test V2 model loading
     if ENSEMBLE_AVAILABLE:
         try:
             ensemble = EnsembleTriageBrain()
             ensemble.load(MODEL_PREFIX)
-            print("✅ V2 model loaded successfully")
+            print("✅ V2 model loaded for binary detection")
             
             # Test with sample data
             motion_data = pd.DataFrame({
@@ -660,23 +587,16 @@ if __name__ == "__main__":
                 'jerk': np.random.normal(0, 10, 100)
             })
             
-            # Test frame analysis
-            analyzer = FrameAnalyzer(ensemble)
-            result = analyzer.analyze_frame(motion_data, 50)
+            # Test binary frame analysis
+            analyzer = BinaryFrameAnalyzer(ensemble)
+            result = analyzer.analyze_frame_binary(motion_data, 50)
             if result:
-                print(f"✅ Frame analysis: {result['classification']} (conf: {result['confidence']:.3f})")
+                print(f"✅ Binary analysis: {result['classification']} (conf: {result['confidence']:.3f})")
             
-            # Test full scene analysis
-            cluster_analyzer = ClusterAnalyzer()
-            if loader.annotations_by_scene_id:
-                test_scene_id = list(loader.annotations_by_scene_id.keys())[0]
-                scene_results = cluster_analyzer.analyze_full_scene(
-                    motion_data, ensemble, scene_id=test_scene_id
-                )
-                print(f"✅ Scene analysis: {len(scene_results['top_clusters'])} clusters")
-                print(f"📝 Annotation bias: {scene_results['annotation_bias']}")
+            print("🎉 Binary detection engine ready for production!")
             
         except Exception as e:
-            print(f"❌ V2 test failed: {e}")
+            print(f"❌ Test failed: {e}")
     
-    print("🎉 Clean ensemble engine test complete!")
+    else:
+        print("❌ V2 ensemble not available for testing")

@@ -406,3 +406,85 @@ class MotionAnalyzer:
             'max_jerk': float(data['jerk'].max()),
             'avg_jerk_rms': float(np.sqrt(np.mean(data['jerk']**2)))
         }
+    
+    def add_dangerous_event_overlays(self, clusters: List[Dict]):
+        """Add GREEN overlays for detected dangerous events"""
+        if not clusters or self.motion_data is None:
+            return
+
+        # Clear old overlays
+        self.clear_overlays()
+
+        max_time = self.motion_data['time'].max()
+        total_data_points = len(self.motion_data)
+
+        logger.info(f"Adding DANGEROUS EVENT overlays: {len(clusters)} events")
+
+        # Use bright green for dangerous events
+        event_color = 'lime'
+        event_alpha = 0.3
+
+        for i, cluster in enumerate(clusters):
+            # Convert cluster frames to motion data time
+            video_start_time = cluster['start_frame'] / 10.0
+            video_end_time = cluster['end_frame'] / 10.0
+
+            # Map to motion data timeline
+            data_start_time = (video_start_time / (total_data_points / 10.0)) * max_time
+            data_end_time = (video_end_time / (total_data_points / 10.0)) * max_time
+
+            # Clamp to data range
+            data_start_time = max(0, min(data_start_time, max_time))
+            data_end_time = max(data_start_time, min(data_end_time, max_time))
+
+            confidence = cluster['avg_confidence']
+            annotation_info = cluster.get('annotation_info', {})
+            comment = annotation_info.get('comment', 'Dangerous Event') if annotation_info else 'Dangerous Event'
+
+            logger.info(f"Event {i+1}: {comment} at {data_start_time:.1f}s-{data_end_time:.1f}s (conf: {confidence:.3f})")
+
+            # Add to all three plots
+            for ax in [self.ax1, self.ax2, self.ax3]:
+                y_min, y_max = ax.get_ylim()
+
+                # Create GREEN rectangle for dangerous event
+                rect = Rectangle(
+                    (data_start_time, y_min),
+                    data_end_time - data_start_time,
+                    y_max - y_min,
+                    facecolor=event_color,
+                    alpha=event_alpha,
+                    edgecolor='darkgreen',
+                    linewidth=3,
+                    zorder=1
+                )
+                ax.add_patch(rect)
+                self.cluster_rectangles.append(rect)
+
+                # Add label on velocity graph only
+                if ax == self.ax1:
+                    mid_time = (data_start_time + data_end_time) / 2
+                    label_y = y_min + (y_max - y_min) * 0.9
+
+                    
+                    duration = cluster['duration_seconds']
+
+                    label_text = f"🚨 Risky Event ({duration:.1f}s)"
+
+                    text = ax.text(
+                        mid_time, label_y,
+                        label_text,
+                        ha='center', va='center',
+                        fontsize=10,
+                        fontweight='bold',
+                        color='darkgreen',
+                        bbox=dict(boxstyle="round,pad=0.3", facecolor='lightgreen', alpha=0.9, edgecolor='darkgreen'),
+                        zorder=10
+                    )
+                    self.cluster_texts.append(text)
+
+        # Store clusters
+        self.current_clusters = clusters
+        self.canvas.draw()
+
+        logger.info(f"Added {len(clusters)} DANGEROUS EVENT overlays")

@@ -11,3 +11,7 @@
 2025-06-18 19:59:13,008 - ANALYSIS - V2 FULL SCAN analysis complete: 100 frames in 0.1s
 2025-06-18 19:59:13,008 - ANALYSIS - Selected top 1 ANNOTATION-AWARE clusters:
 2025-06-18 19:59:13,008 - ANALYSIS -   1. 🔍 other (frames 0-99, score: 0.285, bonus: 1.0x)
+2025-06-19 00:45:40,003 - ANALYSIS - Starting BINARY detection analysis for: 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh
+2025-06-19 00:45:40,756 - ANALYSIS - Binary DANGEROUS EVENT FOCUS analysis complete: 1 dangerous regions in 0.8s
+2025-06-19 00:45:40,810 - ANALYSIS - Updated binary detection display with 1 dangerous events
+2025-06-19 00:49:15,620 - ANALYSIS - Updated binary detection display with 1 dangerous events

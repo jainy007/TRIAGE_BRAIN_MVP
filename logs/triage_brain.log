@@ -200,3 +200,42 @@
 2025-06-18 23:38:02,844 - INFO - Cluster 2: nearmiss video_frames 1144-1189 (114.4-118.9s) -> data_time 114.4-118.9s
 2025-06-18 23:38:02,876 - INFO - Added 2 STABLE cluster overlays with CORRECT timing
 2025-06-18 23:50:11,966 - INFO - V2 application ended
+2025-06-19 00:45:35,124 - INFO - Enhanced video player initialized
+2025-06-19 00:45:35,429 - INFO - Motion analyzer initialized with proper filtering
+2025-06-19 00:45:35,429 - INFO - ============================================================
+2025-06-19 00:45:35,429 - INFO - TRIAGE BRAIN SESSION STARTED
+2025-06-19 00:45:35,429 - INFO - Timestamp: 2025-06-19 00:45:35.429625
+2025-06-19 00:45:35,429 - INFO - ============================================================
+2025-06-19 00:45:35,429 - INFO - Starting Triage Brain GUI with V2 Ensemble
+2025-06-19 00:45:35,534 - INFO - Loaded 50 MP4 clips for V2 analysis
+2025-06-19 00:45:39,892 - INFO - Loading clip for binary analysis: 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh__Autumn_2020
+2025-06-19 00:45:39,942 - INFO - Loaded MP4: 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh.mp4 (1155 frames, 10.0 FPS)
+2025-06-19 00:45:39,944 - INFO - Generated enhanced motion data for V2: 1155 samples
+2025-06-19 00:45:39,945 - INFO - Applied proper filtering: vel_range=[-7.94, 8.80]
+2025-06-19 00:45:40,003 - INFO - Processed motion data with proper filtering: 1154 samples
+2025-06-19 00:45:40,003 - INFO - Running fresh binary detection analysis
+2025-06-19 00:45:40,756 - INFO - Cached analysis for scene 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh_binary
+2025-06-19 00:45:40,782 - INFO - Adding DANGEROUS EVENT overlays: 1 events
+2025-06-19 00:45:40,782 - INFO - Event 1: traffic cones avoided at 34.8s-51.2s (conf: 0.950)
+2025-06-19 00:45:40,810 - INFO - Added 1 DANGEROUS EVENT overlays
+2025-06-19 00:45:40,810 - INFO - Binary analysis complete: 1 dangerous events found
+2025-06-19 00:49:06,868 - INFO - V2 application ended
+2025-06-19 00:49:11,155 - INFO - Enhanced video player initialized
+2025-06-19 00:49:11,453 - INFO - Motion analyzer initialized with proper filtering
+2025-06-19 00:49:11,453 - INFO - ============================================================
+2025-06-19 00:49:11,453 - INFO - TRIAGE BRAIN SESSION STARTED
+2025-06-19 00:49:11,453 - INFO - Timestamp: 2025-06-19 00:49:11.453628
+2025-06-19 00:49:11,453 - INFO - ============================================================
+2025-06-19 00:49:11,453 - INFO - Starting Triage Brain GUI with V2 Ensemble
+2025-06-19 00:49:11,558 - INFO - Loaded 50 MP4 clips for V2 analysis
+2025-06-19 00:49:15,449 - INFO - Loading clip for binary analysis: 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh__Autumn_2020
+2025-06-19 00:49:15,450 - INFO - Loaded cached analysis for scene 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh_binary
+2025-06-19 00:49:15,502 - INFO - Loaded MP4: 0OF3lawgf9vsILBoZVT27MF8zDNuq7zh.mp4 (1155 frames, 10.0 FPS)
+2025-06-19 00:49:15,504 - INFO - Generated enhanced motion data for V2: 1155 samples
+2025-06-19 00:49:15,505 - INFO - Applied proper filtering: vel_range=[-6.04, 8.42]
+2025-06-19 00:49:15,563 - INFO - Processed motion data with proper filtering: 1154 samples
+2025-06-19 00:49:15,563 - INFO - Using cached binary analysis
+2025-06-19 00:49:15,592 - INFO - Adding DANGEROUS EVENT overlays: 1 events
+2025-06-19 00:49:15,592 - INFO - Event 1: traffic cones avoided at 34.8s-51.2s (conf: 0.950)
+2025-06-19 00:49:15,620 - INFO - Added 1 DANGEROUS EVENT overlays
+2025-06-19 00:49:37,284 - INFO - V2 application ended

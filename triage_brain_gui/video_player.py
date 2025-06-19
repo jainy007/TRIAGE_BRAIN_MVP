@@ -10,7 +10,7 @@ import numpy as np
 import os
 import glob
 from PIL import Image, ImageTk
-from typing import List, Optional, Callable
+from typing import List, Optional, Callable, Dict
 from utils import logger
 
 class VideoPlayer:
@@ -198,6 +198,7 @@ class VideoPlayer:
                 self.canvas.delete("all")
                 self.canvas.create_image(self.width//2, self.height//2, image=photo)
                 self.canvas.image = photo  # Keep reference
+                self._add_annotation_overlay(frame_idx)
                 
                 # Update state
                 self.current_frame = frame_idx
@@ -289,6 +290,8 @@ class VideoPlayer:
         
         self.total_frames = 0
         self.current_frame = 0
+        self.annotation_segments = []  
+        self.current_annotation_overlay = False  
         self.is_playing = False
         self.canvas.delete("all")
         self.info_label.config(text="No video loaded")
@@ -304,3 +307,49 @@ class VideoPlayer:
             'is_frame_mode': len(self.frame_data) > 0,
             'video_path': self.video_path
         }
+    
+    def set_annotation_segments(self, annotation_segments: List[Dict]):
+        """Set annotation segments for overlay display"""
+        self.annotation_segments = annotation_segments
+        self.current_annotation_overlay = None
+        print(f"📝 Video player loaded {len(annotation_segments)} annotation segments")
+
+    def _add_annotation_overlay(self, frame_idx: int):
+        """Add red annotation overlay if frame is in annotated region"""
+        if not hasattr(self, 'annotation_segments') or not self.annotation_segments:
+            return
+
+        # Check if current frame is in any annotation segment
+        for segment in self.annotation_segments:
+            if segment['start'] <= frame_idx <= segment['end']:
+                # Frame is in annotated dangerous event - show red overlay
+                self._show_red_overlay(segment['comment'])
+                return
+
+        # Frame not in any annotation - remove overlay if exists
+        self._hide_red_overlay()
+
+    def _show_red_overlay(self, comment: str):
+        """Show red overlay with annotation text"""
+        # Create red background rectangle
+        overlay_rect = self.canvas.create_rectangle(
+            10, 10, self.width - 10, 80,
+            fill='red', outline='darkred', width=3,
+            tags='annotation_overlay'
+        )
+
+        # Add text
+        overlay_text = self.canvas.create_text(
+            self.width // 2, 45,
+            text=f"🚨 {comment.upper()}",
+            font=('Arial', 16, 'bold'),
+            fill='white',
+            tags='annotation_overlay'
+        )
+
+        self.current_annotation_overlay = True
+
+    def _hide_red_overlay(self):
+        """Hide red annotation overlay"""
+        self.canvas.delete('annotation_overlay')
+        self.current_annotation_overlay = False
